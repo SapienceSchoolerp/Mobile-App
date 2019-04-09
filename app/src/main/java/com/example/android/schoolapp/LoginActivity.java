@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -45,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                 String txt_password=password.getText().toString();
 
                 if(TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
-                    Toast.makeText(LoginActivity.this,"All fileds are required",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this,"All fields are required",Toast.LENGTH_SHORT).show();
                 }else {
                     auth.signInWithEmailAndPassword(txt_email,txt_password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

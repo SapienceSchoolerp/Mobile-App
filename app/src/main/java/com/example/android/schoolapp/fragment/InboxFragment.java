@@ -23,15 +23,8 @@ public class InboxFragment extends Fragment  {
 
     public InboxFragment() {
     }
-    // List<String> mAllValues;
     private List<InboxData> list = new ArrayList<>();
-    // private android.support.v7.widget.SearchView searchView = null;
-    // private SearchView.OnQueryTextListener queryTextListener;
-
-
     InboxAdapter inboxAdapter;
-    // private ArrayAdapter<String> mAdapter;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

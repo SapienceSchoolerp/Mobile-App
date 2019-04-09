@@ -1,14 +1,18 @@
 package com.example.android.schoolapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.android.schoolapp.QueAnsActivty;
 import com.example.android.schoolapp.R;
+import com.example.android.schoolapp.model.InboxData;
 import com.example.android.schoolapp.model.KnitData;
 
 import java.util.List;
@@ -40,6 +44,14 @@ public class KnitAdapter extends RecyclerView.Adapter<KnitAdapter.ViewHolder> {
         viewHolder.mAnswerList.setText(data.getAnswer_list());
         viewHolder.mViews.setText(data.getViews());
 
+        viewHolder.btnAnswer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,QueAnsActivty.class);
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -55,6 +67,8 @@ public class KnitAdapter extends RecyclerView.Adapter<KnitAdapter.ViewHolder> {
         TextView mAnswerList;
         TextView mViews;
 
+        Button btnAnswer;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -63,6 +77,7 @@ public class KnitAdapter extends RecyclerView.Adapter<KnitAdapter.ViewHolder> {
             mQuestion = itemView.findViewById(R.id.question);
             mAnswerList = itemView.findViewById(R.id.kAnswer);
             mViews = itemView.findViewById(R.id.kViews);
+            btnAnswer=itemView.findViewById(R.id.answerBtn);
         }
     }
 
