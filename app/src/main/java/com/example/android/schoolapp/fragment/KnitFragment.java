@@ -1,5 +1,6 @@
 package com.example.android.schoolapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.android.schoolapp.QueAnsActivty;
 import com.example.android.schoolapp.R;
 import com.example.android.schoolapp.adapter.KnitAdapter;
 import com.example.android.schoolapp.model.KnitData;
@@ -21,10 +24,7 @@ public class KnitFragment extends Fragment {
 
     public KnitFragment(){
     }
-
     private List<KnitData> dataList=new ArrayList<>();
-
-
 
     @Nullable
     @Override
@@ -34,6 +34,16 @@ public class KnitFragment extends Fragment {
         KnitAdapter adapter = new KnitAdapter(getContext(),dataList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+
+        /*Button btnAnswer=view.findViewById(R.id.answerBtn);
+        btnAnswer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in=new Intent(getActivity(), QueAnsActivty.class);
+                startActivity(in);
+            }
+        });*/
+
         return view;
     }
 

@@ -14,7 +14,7 @@
         android:textSize="25sp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="25dp"
-        />
+        android:layout_marginStart="15dp" />
 
     <EditText
         android:id="@+id/login_email"
@@ -22,7 +22,7 @@
         android:layout_marginTop="25dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Email"
+        android:hint="Email"
         />
 
     <EditText
@@ -30,7 +30,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Password"
+        android:hint="Password"
         android:layout_marginTop="25dp"
         />
 

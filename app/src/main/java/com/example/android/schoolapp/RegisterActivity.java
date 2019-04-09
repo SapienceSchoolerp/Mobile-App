@@ -1,6 +1,5 @@
 package com.example.android.schoolapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,26 +22,43 @@ import java.util.HashMap;
 public class RegisterActivity extends AppCompatActivity {
 
     EditText username, email, password;
-    Button btn;
+    Button btn, btnLogin;
 
     FirebaseAuth auth;
+    FirebaseUser firebaseUser;
     DatabaseReference reference;
-    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        FirebaseApp.initializeApp(context);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        //check user is already exist.
+        if(firebaseUser !=null){
+            Intent intent= new Intent(RegisterActivity.this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         username=findViewById(R.id.edit_userName);
         email=findViewById(R.id.edit_userEmail);
         password=findViewById(R.id.edit_userPassword);
 
         btn=findViewById(R.id.registerBtn);
+        btnLogin=findViewById(R.id.login_btn);
 
         auth=FirebaseAuth.getInstance();
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String txtPassword=password.getText().toString();
 
                 if(TextUtils.isEmpty(txtUserName) || TextUtils.isEmpty(txtEmail) || TextUtils.isEmpty(txtPassword)){
-                    Toast.makeText(RegisterActivity.this,"All fileds are required",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,"All fields are required",Toast.LENGTH_SHORT).show();
                 }else if(txtPassword.length()<6){
                     Toast.makeText(RegisterActivity.this,"password must be at least 6 characters",Toast.LENGTH_SHORT).show();
                 }else{
