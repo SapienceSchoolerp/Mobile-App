@@ -77,12 +77,13 @@ public class ProfileS extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String name=dataSnapshot.child("username").getValue().toString();
-                final String image=dataSnapshot.child("image").getValue().toString();
+                String name=dataSnapshot.child("name").getValue().toString();
+              //  final String image=dataSnapshot.child("image").getValue().toString();
 
                 mName.setText(name);
 
-
+                //Work on Progress.
+                /*
                 if(image.equals("default")){
                     circleImageView.setImageResource(R.drawable.ic_person);
                 }else{
@@ -97,13 +98,14 @@ public class ProfileS extends AppCompatActivity {
                             Picasso.get().load(image).into(circleImageView);
                         }
                     });
-                }
+                }*/
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
 
+        //Select image from gallery.
         img_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

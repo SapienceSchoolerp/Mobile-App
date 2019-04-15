@@ -7,7 +7,7 @@
     tools:context=".fragment.StuRegisterFragment">
 
     <EditText
-        android:id="@+id/edit_userName"
+        android:id="@+id/StuUserName"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="Username"
@@ -16,7 +16,7 @@
         android:layout_gravity="center_horizontal"
         />
     <EditText
-        android:id="@+id/edit_userPhone"
+        android:id="@+id/StuUserPhone"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="Mobile No."
@@ -26,7 +26,7 @@
         />
 
     <EditText
-        android:id="@+id/edit_userEmail"
+        android:id="@+id/StuUserEmail"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -45,7 +45,7 @@
         />
 
     <EditText
-        android:id="@+id/edit_userPassword"
+        android:id="@+id/StuUserPassword"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -55,7 +55,7 @@
         />
 
     <Button
-        android:id="@+id/registerBtn"
+        android:id="@+id/StuRegisterBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
