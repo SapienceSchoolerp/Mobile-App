@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.StuRegisterFragment">
+
+    <EditText
+        android:id="@+id/StuUserName"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        android:layout_marginTop="20dp"
+        android:inputType="text"
+        android:layout_gravity="center_horizontal"
+        />
+    <EditText
+        android:id="@+id/StuUserPhone"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Mobile No."
+        android:layout_marginTop="20dp"
+        android:inputType="phone"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <EditText
+        android:id="@+id/StuUserEmail"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <Spinner
+        android:layout_width="300dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner2"
+        android:entries="@array/student_class"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <EditText
+        android:id="@+id/StuUserPassword"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <Button
+        android:id="@+id/StuRegisterBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Submit"
+        />
+
+</LinearLayout>

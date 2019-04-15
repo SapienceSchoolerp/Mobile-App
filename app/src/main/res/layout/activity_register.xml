@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,6 +8,7 @@
     tools:context=".RegisterActivity">
 
     <TextView
+        android:id="@+id/registerTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register Account"
@@ -15,53 +16,66 @@
         android:layout_marginTop="15dp"
         android:textSize="25sp"
         android:layout_marginStart="10dp" />
-    <EditText
-        android:id="@+id/edit_userName"
-        android:layout_width="300dp"
+    <LinearLayout
+        android:id="@+id/layoutBtn"
+        android:layout_below="@+id/registerTxt"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"
-        />
-    <EditText
-        android:id="@+id/edit_userEmail"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Email"
-        android:layout_gravity="center_horizontal"
-        />
-    <EditText
-        android:id="@+id/edit_userPassword"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Password"
-        android:layout_gravity="center_horizontal"
-        />
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal">
 
-    <Button
-        android:id="@+id/registerBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"
-        android:text="Submit"
-        />
+        <Button
+            android:id="@+id/btnStudent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Student"
+            android:layout_marginRight="7dp"
+            android:layout_marginEnd="7dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btnTeacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:text="Teacher"
+            android:layout_marginStart="7dp"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_below="@+id/layoutBtn"
+        android:layout_above="@+id/layoutLogin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <RelativeLayout
+        android:id="@+id/layoutLogin"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="if already a member ? "
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        />
-    <Button
-        android:id="@+id/login_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log in"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        />
-</LinearLayout>
+        android:gravity="center"
+        android:layout_marginBottom="15dp">
+
+        <TextView
+            android:id="@+id/txt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="if already a member ?"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textAllCaps="true"
+            android:id="@+id/loginTxt"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/txt2"
+            android:layout_marginStart="5dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

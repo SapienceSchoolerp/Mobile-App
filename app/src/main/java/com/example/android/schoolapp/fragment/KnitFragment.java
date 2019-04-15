@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.android.schoolapp.QueAnsActivty;
+import com.example.android.schoolapp.QuestionActivity;
 import com.example.android.schoolapp.R;
 import com.example.android.schoolapp.adapter.KnitAdapter;
 import com.example.android.schoolapp.model.KnitData;
@@ -35,17 +37,17 @@ public class KnitFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        /*Button btnAnswer=view.findViewById(R.id.answerBtn);
-        btnAnswer.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in=new Intent(getActivity(), QueAnsActivty.class);
+                Intent in = new Intent(getActivity(),QuestionActivity.class);
                 startActivity(in);
             }
-        });*/
-
+        });
         return view;
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

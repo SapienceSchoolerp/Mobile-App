@@ -3,6 +3,7 @@ package com.example.android.schoolapp.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,6 @@ import java.util.List;
 
 
 public class KnitAdapter extends RecyclerView.Adapter<KnitAdapter.ViewHolder> {
-
     private Context context;
     private List<KnitData> dataList;
 
@@ -51,7 +51,6 @@ public class KnitAdapter extends RecyclerView.Adapter<KnitAdapter.ViewHolder> {
                 context.startActivity(intent);
             }
         });
-
     }
 
     @Override

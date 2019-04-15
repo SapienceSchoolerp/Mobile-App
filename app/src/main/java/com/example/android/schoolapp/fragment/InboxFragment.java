@@ -23,7 +23,7 @@ public class InboxFragment extends Fragment  {
 
     public InboxFragment() {
     }
-    private List<InboxData> list = new ArrayList<>();
+    private List<InboxData> list;
     InboxAdapter inboxAdapter;
     @Nullable
     @Override
@@ -44,69 +44,6 @@ public class InboxFragment extends Fragment  {
         list = new ArrayList<>();
         list.add(new InboxData("Ms. Tio", " A narrative is a report of connected events, real or imaginary, presented in a sequence of written or spoken words, or still or moving images, or both.", ""));
         list.add(new InboxData("Ms. Leo", " A narrative is a report of connected events, real or imaginary, presented in a sequence of written or spoken words, or still or moving images, or both.", ""));
-
     }
-
-
-    //SearchBar Code
-   /* @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search_menu, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                inboxAdapter.getFilter().filter(s);
-                return false;
-            }
-        });
-
-//        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-//        searchView= (android.support.v7.widget.SearchView) menu.findItem(R.id.search_menu).getActionView();
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo());
-//        SearchView searchView
-//
-       /* if(searchItem != null){
-            searchView= (SearchView) searchItem.getActionView();
-        }
-
-        if(searchView !=null){
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-
-            queryTextListener=new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String s) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String s) {
-                    return false;
-                }
-            };
-            searchView.setOnQueryTextListener(queryTextListener);
-
-        }
-        //searchView.setQueryHint("Search");
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-
-   /* @Override
-    public boolean onQueryTextSubmit(String s) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String s) {
-        return false;
-    }*/
-    }
+}
 

@@ -4,9 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/bar_layout"
+        android:id="@+id/bar"/>
+
    <android.support.v7.widget.RecyclerView
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:id="@+id/detailRecyclerView"
+       android:layout_below="@+id/bar"
        />
 </RelativeLayout>
