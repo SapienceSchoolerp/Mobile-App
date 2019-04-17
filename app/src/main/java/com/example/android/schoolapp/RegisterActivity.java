@@ -56,9 +56,10 @@ public class RegisterActivity extends AppCompatActivity {
         //start login page.
         login.setOnClickListener(new View.OnClickListener() {
             @Override
+            //Error not solved
             public void onClick(View view) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
+               Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+               startActivity(intent);
             }
         });
     }

@@ -24,19 +24,13 @@ public class QuestionActivity extends AppCompatActivity {
 
     EditText mQuestion;
     Button btn;
-    // DatabaseReference UserRef, PostRef;
-   // FirebaseAuth mAuth;
-      FirebaseUser fUser;
-   // private String currentUser;
+    DatabaseReference UserRef, PostRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
-        //currentUser = mAuth.getCurrentUser().getUid();
-        //PostRef =FirebaseDatabase.getInstance().getReference().child("Post");
-        //UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         Toolbar toolbar = findViewById(R.id.bar);
         setSupportActionBar(toolbar);
 
@@ -52,17 +46,16 @@ public class QuestionActivity extends AppCompatActivity {
 
         mQuestion = findViewById(R.id.editTextQues);
         btn = findViewById(R.id.askBtn);
-        fUser=FirebaseAuth.getInstance().getCurrentUser();
 
         //Get Message
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String msg = mQuestion.getText().toString();
-                if(!msg.equals("")){
-                    postQuestion(fUser.getUid(),msg);
-                }else{
-                    Toast.makeText(QuestionActivity.this,"You can't send empty message",Toast.LENGTH_SHORT).show();
+                if (!msg.equals("")) {
+                    postQuestion(msg);
+                } else {
+                    Toast.makeText(QuestionActivity.this, "You can't send empty message", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -70,27 +63,117 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     //Send question/Post question
-    private void postQuestion(final String userName, final String question){
-        FirebaseUser currentUser=FirebaseAuth.getInstance().getCurrentUser();
+    private void postQuestion(final String question) {
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String uid = currentUser.getUid();
-        DatabaseReference reference =FirebaseDatabase.getInstance().getReference().child("Post").child(uid);
+        UserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+        PostRef = FirebaseDatabase.getInstance().getReference().child("Post").child(uid);
 
-        HashMap<String,Object> postMap = new HashMap<>();
-
-        postMap.put("username",userName);
-        postMap.put("question",question);
-
-        //reference.child("Post").push().setValue(postMap);
-        reference.child("Post").setValue(postMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+        UserRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(QuestionActivity.this,"Post successfully Upload",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(QuestionActivity.this,"Error in Post",Toast.LENGTH_SHORT).show();
-                }
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                String name = dataSnapshot.child("name").getValue().toString();
+
+                HashMap<String, Object> postMap = new HashMap<>();
+                postMap.put("name", name);
+                postMap.put("question", question);
+
+                PostRef.setValue(postMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(QuestionActivity.this, "Post Successfully uploaded", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(QuestionActivity.this, "Error in Uploading", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
+
+        //Replacement of this Code
+        //final String currentUser=FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        /*
+        PostRef =FirebaseDatabase.getInstance().getReference().child("Post");
+        UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
+
+        UserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    HashMap<String,Object> postMap = new HashMap<>();
+                    //postMap.put("username",currentUser);
+                    postMap.put("question",question);
+
+                    PostRef.updateChildren(postMap)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        sendUserToMainActivity();
+                                    }
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = currentUser.getUid();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Post").child(uid);
+
+        HashMap<String, String> postMap = new HashMap<>();
+        //postMap.put("username",userName);
+        postMap.put("question", question);
+        postMap.put("name",name);
+
+        //reference.child("Post").push().setValue(postMap);
+        reference.setValue(postMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(QuestionActivity.this, "Post successfully Upload", Toast.LENGTH_SHORT).show();
+                    sendUserToMainActivity();
+                } else {
+                    Toast.makeText(QuestionActivity.this, "Error in Post", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });*/
     }
 
+    //Working on it
+    /*
+    private String getName(){
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String uid=firebaseUser.getUid();
+        final String[] mName = new String[1];
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return name;
+    }*/
 }

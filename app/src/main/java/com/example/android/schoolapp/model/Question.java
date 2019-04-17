@@ -3,16 +3,16 @@ package com.example.android.schoolapp.model;
 public class Question {
 
     private String id;
-    private String userName;
-    private String QuestionDes;
+    private String name;
+    private String question;
 
     public Question() {
     }
 
-    public Question(String id, String userName, String questionDes) {
+    public Question(String id, String name, String question) {
         this.id = id;
-        this.userName = userName;
-        QuestionDes = questionDes;
+        this.name = name;
+        this.question = question;
     }
 
     public String getId() {
@@ -23,19 +23,19 @@ public class Question {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getQuestionDes() {
-        return QuestionDes;
+    public String getQuestion() {
+        return question;
     }
 
-    public void setQuestionDes(String questionDes) {
-        QuestionDes = questionDes;
+    public void setQuestion(String question) {
+        this.question = question;
     }
 }

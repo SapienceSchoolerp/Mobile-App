@@ -14,23 +14,16 @@
         android:textStyle="bold"
         android:text="Name"
         />
-    <TextView
-        android:id="@+id/kTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="time"
-        android:layout_below="@+id/kName"
-        />
 
     <TextView
+        android:layout_below="@+id/kName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/question"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
         android:text="Question ?"
         android:textSize="20sp"
-        android:layout_below="@+id/kTime"
-        />
+        android:layout_marginStart="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,16 +44,6 @@
         android:layout_below="@+id/question"/>
 
     <Button
-        android:id="@+id/follow"
-        android:layout_width="90dp"
-        android:layout_height="35dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
-        android:text="follow"
-        android:layout_marginEnd="15dp" />
-
-    <Button
         android:id="@+id/answerBtn"
         android:layout_width="90dp"
         android:layout_height="35dp"
@@ -70,4 +53,5 @@
         android:layout_marginRight="15dp"
         android:layout_marginEnd="15dp"
         android:text="answer"/>
+
 </RelativeLayout>

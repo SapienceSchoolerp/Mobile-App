@@ -7,7 +7,10 @@
     android:orientation="vertical"
     tools:context=".RegisterActivity">
 
+
+
     <TextView
+        android:layout_below="@+id/bar"
         android:id="@+id/registerTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,12 +19,13 @@
         android:layout_marginTop="15dp"
         android:textSize="25sp"
         android:layout_marginStart="10dp" />
+
     <LinearLayout
         android:id="@+id/layoutBtn"
         android:layout_below="@+id/registerTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="7dp"
         android:gravity="center_horizontal">
 
         <Button
