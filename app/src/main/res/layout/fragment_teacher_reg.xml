@@ -8,7 +8,7 @@
 
 
     <EditText
-        android:id="@+id/edit_userName"
+        android:id="@+id/edit_TeacherName"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="Username"
@@ -16,8 +16,9 @@
         android:inputType="text"
         android:layout_gravity="center_horizontal"
         />
+
     <EditText
-        android:id="@+id/edit_userPhone"
+        android:id="@+id/edit_TeacherPhone"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="Mobile No."
@@ -27,7 +28,7 @@
         />
 
     <EditText
-        android:id="@+id/edit_userEmail"
+        android:id="@+id/edit_TeacherEmail"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -37,7 +38,7 @@
         />
 
     <EditText
-        android:id="@+id/edit_userPassword"
+        android:id="@+id/edit_TeacherPassword"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -47,11 +48,12 @@
         />
 
     <Button
-        android:id="@+id/registerBtn"
+        android:id="@+id/TeacherRegisterBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
         android:text="Submit"
         />
+
 </LinearLayout>
