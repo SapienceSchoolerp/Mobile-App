@@ -39,7 +39,7 @@ dependencies {
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
     //imageCrop
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.0'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.6.0'
 
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
