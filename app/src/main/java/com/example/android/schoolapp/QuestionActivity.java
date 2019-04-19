@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -96,84 +97,5 @@ public class QuestionActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
-
-        //Replacement of this Code
-        //final String currentUser=FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        /*
-        PostRef =FirebaseDatabase.getInstance().getReference().child("Post");
-        UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
-
-
-        UserRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    HashMap<String,Object> postMap = new HashMap<>();
-                    //postMap.put("username",currentUser);
-                    postMap.put("question",question);
-
-                    PostRef.updateChildren(postMap)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        sendUserToMainActivity();
-                                    }
-                                }
-                            });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = currentUser.getUid();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Post").child(uid);
-
-        HashMap<String, String> postMap = new HashMap<>();
-        //postMap.put("username",userName);
-        postMap.put("question", question);
-        postMap.put("name",name);
-
-        //reference.child("Post").push().setValue(postMap);
-        reference.setValue(postMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(QuestionActivity.this, "Post successfully Upload", Toast.LENGTH_SHORT).show();
-                    sendUserToMainActivity();
-                } else {
-                    Toast.makeText(QuestionActivity.this, "Error in Post", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
     }
-
-    //Working on it
-    /*
-    private String getName(){
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String uid=firebaseUser.getUid();
-        final String[] mName = new String[1];
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        return name;
-    }*/
 }

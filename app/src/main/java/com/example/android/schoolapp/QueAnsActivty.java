@@ -150,7 +150,7 @@ public class QueAnsActivty extends AppCompatActivity {
             commentMap.put("comment", comment);
             commentMap.put("name", username);
 
-            PostRef.child(currentUser).updateChildren(commentMap)
+            PostRef.child(currentUser).setValue(commentMap)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
