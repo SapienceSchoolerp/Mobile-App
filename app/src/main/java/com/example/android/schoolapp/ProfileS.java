@@ -1,15 +1,21 @@
 package com.example.android.schoolapp;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.SharedPreferences;;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +38,9 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.File;
+
+import java.util.Calendar;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -40,26 +48,64 @@ public class ProfileS extends AppCompatActivity {
 
     private static final int GALLERY_PICK = 1;
     CircleImageView circleImageView;
-    TextView mName;
+    TextView mName, mMobile, date_ofBirth;
     Button img_btn;
+    ImageButton btnDate;
+
+    Calendar c;
+    DatePickerDialog dpd;
 
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
     private StorageReference img_storageRef;
 
+    //public static final String SHARED_PREFS="sharedPrefs";
+    //public static final String TEXT = "text";
+
+    SharedPreferences sp;
+    String mTxt;
+    Context ctx;
+
+    String mDate;
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_s);
 
         circleImageView = findViewById(R.id.disImg);
-        mName=findViewById(R.id.profileUsername1);
+        mName=findViewById(R.id.profileUsername2);
+        mMobile=findViewById(R.id.mobile2);
         img_btn=findViewById(R.id.imageBtn);
+        //sp=getSharedPreferences(USER_PREF, Context.MODE_PRIVATE);
+
+        btnDate=findViewById(R.id.dateBtn);
+        date_ofBirth=findViewById(R.id.dateOfBirth2);
+        btnDate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                c=Calendar.getInstance();
+                int day=c.get(Calendar.DAY_OF_MONTH);
+                int month=c.get(Calendar.MONTH);
+                int year=c.get(Calendar.YEAR);
+                dpd = new DatePickerDialog(ProfileS.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
+
+                        date_ofBirth.setText(mDay+"/"+(mMonth + 1)+"/"+mYear);
+                       // save(date_ofBirth.getText().toString());
+                        //loadData();
+                    }
+                },day,month,year);
+                dpd.show();
+            }
+        });
 
         //Toolbar for Profile Setting
         Toolbar toolbar = findViewById(R.id.bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Profile");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Profile");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,13 +123,13 @@ public class ProfileS extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String name=dataSnapshot.child("name").getValue().toString();
-              //  final String image=dataSnapshot.child("image").getValue().toString();
-
+                String name= Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
+                String mobileNo=dataSnapshot.child("mobile").getValue().toString();
+                final String image=dataSnapshot.child("image").getValue().toString();
                 mName.setText(name);
+                mMobile.setText(mobileNo);
 
                 //Work on Progress.
-                /*
                 if(image.equals("default")){
                     circleImageView.setImageResource(R.drawable.ic_person);
                 }else{
@@ -98,7 +144,7 @@ public class ProfileS extends AppCompatActivity {
                             Picasso.get().load(image).into(circleImageView);
                         }
                     });
-                }*/
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -118,6 +164,24 @@ public class ProfileS extends AppCompatActivity {
         });
     }
 
+
+/*
+    private void save(String date ){
+        sp=getSharedPreferences("SP_DATE",MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("DATE", date);
+        editor.apply();
+
+        Toast.makeText(this,"Date Saved",Toast.LENGTH_SHORT).show();
+    }
+
+    private void loadData(){
+        String date = sp.getString("DATE",date_ofBirth.getText().toString());
+        date_ofBirth.setText(date);
+    }
+*/
+    //Crop and Upload image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

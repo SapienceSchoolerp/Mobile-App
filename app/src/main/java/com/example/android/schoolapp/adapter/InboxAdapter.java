@@ -15,11 +15,10 @@ import com.example.android.schoolapp.model.InboxData;
 
 import java.util.List;
 
-public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder>{
+public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> {
 
     private Context context;
     private List<InboxData> dataList;
-   // private List<InboxData> dataListFull;
 
     public InboxAdapter(Context context, List<InboxData> dataList) {
         this.context = context;
@@ -29,20 +28,20 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder>{
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view= LayoutInflater.from(context).inflate(R.layout.inbox_list,viewGroup,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.inbox_list, viewGroup, false);
         return new InboxAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        InboxData data =dataList.get(i);
+        InboxData data = dataList.get(i);
         viewHolder.mName.setText(data.getmName());
         viewHolder.mMessage.setText(data.getmMessage());
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(view.getContext(),DetailInbox.class);
+                Intent intent = new Intent(view.getContext(), DetailInbox.class);
                 context.startActivity(intent);
             }
         });
@@ -54,7 +53,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder>{
     }
 
     // ViewHolder
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView mName;
         TextView mMessage;
@@ -62,8 +61,8 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder>{
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            mName=itemView.findViewById(R.id.userName);
-            mMessage=itemView.findViewById(R.id.userMsg);
+            mName = itemView.findViewById(R.id.userName);
+            mMessage = itemView.findViewById(R.id.userMsg);
         }
     }
 }
