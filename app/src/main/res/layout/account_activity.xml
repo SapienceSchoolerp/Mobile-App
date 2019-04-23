@@ -4,52 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity=""
     android:orientation="vertical"
     tools:context=".AccountActivity">
 
     <include
         android:id="@+id/bar"
-        layout="@layout/bar_layout"/>
+        layout="@layout/bar_layout" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:orientation="vertical">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
-            android:layout_gravity="center_horizontal"
-            />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        >
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/small_userImage"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="30dp"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/ic_launcher" />
-
-        <TextView
-            android:id="@+id/userId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/small_userImage"
-            android:layout_toRightOf="@+id/small_userImage"
-            android:text="1234567890"
-            android:layout_marginLeft="10dp"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="40dp"
-            android:layout_marginStart="10dp" />
-
-    </RelativeLayout>
+        android:layout_gravity="center"
+        android:text="Demo"
+        android:textSize="40sp" />
 
 </LinearLayout>

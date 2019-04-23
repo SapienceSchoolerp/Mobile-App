@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.android.schoolapp.QueAnsActivty;
+import com.example.android.schoolapp.CommentActivity;
 import com.example.android.schoolapp.R;
 import com.example.android.schoolapp.model.Question;
 
@@ -43,7 +43,7 @@ public class KnitAdapter extends RecyclerView.Adapter<KnitAdapter.ViewHolder> {
         viewHolder.btnAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, QueAnsActivty.class);
+                Intent intent = new Intent(context, CommentActivity.class);
                 context.startActivity(intent);
             }
         });

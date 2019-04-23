@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/bar_layout"
-        android:id="@+id/bar"/>
+    <include
+        android:id="@+id/bar"
+        layout="@layout/bar_layout" />
 
-   <android.support.v7.widget.RecyclerView
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:id="@+id/detailRecyclerView"
-       android:layout_below="@+id/bar"
-       />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/detailRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bar" />
 </RelativeLayout>

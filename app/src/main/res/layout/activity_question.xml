@@ -6,32 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".QuestionActivity">
 
-    <include layout="@layout/bar_layout"
-        android:id="@+id/bar"/>
+    <include
+        android:id="@+id/bar"
+        layout="@layout/bar_layout" />
 
     <EditText
-        android:layout_below="@id/bar"
+        android:id="@+id/editTextQues"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextQues"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="30dp"
-        android:hint="Type"
+        android:layout_below="@id/bar"
         android:layout_marginStart="30dp"
-        android:inputType="text"
-        />
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="50dp"
+        android:hint="Type"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/askBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ask"
         android:layout_below="@+id/editTextQues"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="30dp"
-        android:layout_marginEnd="30dp"
         android:layout_marginTop="10dp"
-        />
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:text="Ask" />
 
 </RelativeLayout>

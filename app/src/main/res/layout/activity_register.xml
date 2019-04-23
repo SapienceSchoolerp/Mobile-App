@@ -7,24 +7,21 @@
     android:orientation="vertical"
     tools:context=".RegisterActivity">
 
-
-
     <TextView
-        android:layout_below="@+id/bar"
         android:id="@+id/registerTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register Account"
+        android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
-        android:textSize="25sp"
-        android:layout_marginStart="10dp" />
+        android:text="Register Account"
+        android:textSize="25sp" />
 
     <LinearLayout
         android:id="@+id/layoutBtn"
-        android:layout_below="@+id/registerTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/registerTxt"
         android:layout_marginTop="7dp"
         android:gravity="center_horizontal">
 
@@ -32,54 +29,53 @@
             android:id="@+id/btnStudent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Student"
+            android:layout_marginEnd="7dp"
             android:layout_marginRight="7dp"
-            android:layout_marginEnd="7dp" />
+            android:text="@string/student" />
 
         <Button
             android:id="@+id/btnTeacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
             android:layout_marginLeft="7dp"
-            android:text="Teacher"
-            android:layout_marginStart="7dp"/>
+            android:text="@string/teacher" />
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/frame"
-        android:layout_below="@+id/layoutBtn"
-        android:layout_above="@+id/layoutLogin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layoutLogin"
+        android:layout_below="@+id/layoutBtn" />
 
     <RelativeLayout
         android:id="@+id/layoutLogin"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
         android:gravity="center"
-        android:layout_marginBottom="15dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/txt2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="if already a member ?"
-            />
+            android:text="@string/if_already_a_member" />
 
         <TextView
+            android:id="@+id/loginTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:textAllCaps="true"
-            android:id="@+id/loginTxt"
-            android:textStyle="bold"
-            android:textColor="#000"
+            android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/txt2"
-            android:layout_marginStart="5dp" />
+            android:text="@string/login"
+            android:textAllCaps="true"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:layout_toEndOf="@+id/txt2" />
 
     </RelativeLayout>
-
 </RelativeLayout>

@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String mName= dataSnapshot.child("name").getValue().toString();
+             /*   String mName= dataSnapshot.child("name").getValue().toString();
                 final String image=dataSnapshot.child("image").getValue().toString();
 
                 if(image.equals("default")){
@@ -88,8 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                     });
                 }
-
-                name.setText(mName);
+                name.setText(mName);*/
             }
 
             @Override
