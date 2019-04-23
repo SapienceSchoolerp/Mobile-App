@@ -7,44 +7,42 @@
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
-    <include layout="@layout/bar_layout"
-        android:id="@+id/bar"/>
+    <include
+        android:id="@+id/bar"
+        layout="@layout/bar_layout" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:textSize="25sp"
+        android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="25dp"
-        android:layout_marginStart="15dp" />
+        android:text="Login"
+        android:textSize="25sp" />
 
     <EditText
         android:id="@+id/login_email"
         android:layout_width="300dp"
-        android:layout_marginTop="25dp"
-        android:inputType="textEmailAddress"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
         android:hint="Email"
-        />
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/login_password"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:inputType="textPassword"
-        android:hint="Password"
         android:layout_marginTop="25dp"
-        />
+        android:hint="Password"
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/login_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"
-        />
+        android:text="Login" />
 </LinearLayout>

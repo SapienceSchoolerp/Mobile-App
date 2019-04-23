@@ -32,4 +32,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">Name</string>
+    <string name="student">Student</string>
+    <string name="teacher">Teacher</string>
+    <string name="login">Login</string>
+    <string name="if_already_a_member">if already a member ?</string>
 </resources>

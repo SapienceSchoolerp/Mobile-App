@@ -16,12 +16,16 @@ import com.example.android.schoolapp.R;
 import com.example.android.schoolapp.adapter.InboxAdapter;
 import com.example.android.schoolapp.model.Teacher;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
@@ -33,16 +37,20 @@ public class TeacherRegFragment extends Fragment {
 
     EditText name, email, mobile, password;
     Button submitBtn;
+    FirebaseFirestore db;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_teacher_reg, container, false);
+
         name = view.findViewById(R.id.edit_TeacherName);
         email = view.findViewById(R.id.edit_TeacherEmail);
         mobile = view.findViewById(R.id.edit_TeacherPhone);
         password = view.findViewById(R.id.edit_TeacherPassword);
+
+        db=FirebaseFirestore.getInstance();
 
         submitBtn = view.findViewById(R.id.TeacherRegisterBtn);
 
@@ -77,16 +85,31 @@ public class TeacherRegFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                            String uid = currentUser.getUid();
+                            //FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                            //String uid = currentUser.getUid();
 
-                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("").child(uid);
+                           // DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("").child(uid);
+
 
                             HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put("name", name);
                             hashMap.put("mobile", mobile);
                             hashMap.put("image", "default");
-
+                            db.collection("Teacher").add(hashMap)
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            Toast.makeText(getContext(),"Register successfully",Toast.LENGTH_SHORT).show();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Intent intent = new Intent(getContext(),MainActivity.class);
+                                    startActivity(intent);
+                                    Toast.makeText(getContext(),"Error in Registering",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            /*
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -96,10 +119,9 @@ public class TeacherRegFragment extends Fragment {
                                         startActivity(intent);
                                     }
                                 }
-                            });
+                            });*/
                         }
                     }
                 });
     }
-
 }

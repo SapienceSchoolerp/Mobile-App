@@ -11,49 +11,44 @@
         android:id="@+id/edit_TeacherName"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:layout_marginTop="20dp"
-        android:inputType="text"
         android:layout_gravity="center_horizontal"
-        />
+        android:layout_marginTop="20dp"
+        android:hint="Username"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/edit_TeacherPhone"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="Mobile No."
-        android:layout_marginTop="20dp"
-        android:inputType="phone"
         android:layout_gravity="center_horizontal"
-        />
+        android:layout_marginTop="20dp"
+        android:hint="Mobile No."
+        android:inputType="phone" />
 
     <EditText
         android:id="@+id/edit_TeacherEmail"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:layout_gravity="center_horizontal"
-        />
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/edit_TeacherPassword"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:hint="Password"
-        android:inputType="textPassword"
-        android:layout_gravity="center_horizontal"
-        />
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/TeacherRegisterBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
-        android:text="Submit"
-        />
+        android:layout_marginTop="20dp"
+        android:text="Submit" />
 
 </LinearLayout>

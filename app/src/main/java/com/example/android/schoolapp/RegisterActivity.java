@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.example.android.schoolapp.fragment.StuRegisterFragment;
 import com.example.android.schoolapp.fragment.TeacherRegFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         //check user is already exist.
+
         if (firebaseUser != null) {
             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
             startActivity(intent);

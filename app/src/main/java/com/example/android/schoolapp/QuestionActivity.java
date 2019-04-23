@@ -18,11 +18,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
 public class QuestionActivity extends AppCompatActivity {
 
+
+    FirebaseFirestore db;
     EditText mQuestion;
     Button btn;
     DatabaseReference UserRef, PostRef;
@@ -34,6 +39,8 @@ public class QuestionActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.bar);
         setSupportActionBar(toolbar);
+
+        db=FirebaseFirestore.getInstance();
 
         getSupportActionBar().setTitle("Question");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -66,7 +73,23 @@ public class QuestionActivity extends AppCompatActivity {
     //Send question/Post question
     private void postQuestion(final String question) {
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DocumentReference dRef = db.collection("Student").document("name");
+        dRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+               String name  = document.getString("name");
+
+            }
+        });
+
+
+/*
+        HashMap<String,String> quesMap = new HashMap<>();
+        quesMap.put("question",question);
+        quesMap.put("name", name[0]);
+*/
+       /* FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String uid = currentUser.getUid();
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
         PostRef = FirebaseDatabase.getInstance().getReference().child("Post").child(uid);
@@ -96,6 +119,6 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
-        });
+        });*/
     }
 }
