@@ -12,6 +12,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -29,6 +30,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -47,6 +51,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileS extends AppCompatActivity {
 
     private static final int GALLERY_PICK = 1;
+    private static final String TAG = "MyActivity";
     CircleImageView circleImageView;
     TextView mName, mMobile, date_ofBirth;
     Button img_btn;
@@ -58,6 +63,7 @@ public class ProfileS extends AppCompatActivity {
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
     private StorageReference img_storageRef;
+    private FirebaseFirestore db;
 
     //public static final String SHARED_PREFS="sharedPrefs";
     //public static final String TEXT = "text";
@@ -67,6 +73,7 @@ public class ProfileS extends AppCompatActivity {
     Context ctx;
 
     String mDate;
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -78,6 +85,7 @@ public class ProfileS extends AppCompatActivity {
         mName=findViewById(R.id.profileUsername2);
         mMobile=findViewById(R.id.mobile2);
         img_btn=findViewById(R.id.imageBtn);
+        db=FirebaseFirestore.getInstance();
         //sp=getSharedPreferences(USER_PREF, Context.MODE_PRIVATE);
 
         btnDate=findViewById(R.id.dateBtn);
@@ -117,17 +125,47 @@ public class ProfileS extends AppCompatActivity {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String currentUser=firebaseUser.getUid();
-        reference= FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser);
-        reference.keepSynced(true);
+        String current = FirebaseAuth.getInstance().getUid();
+       // mName.setText(current);
+       // reference= FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser);
+        //reference.keepSynced(true);
 
+        DocumentReference docRef = db.collection("Students").document(currentUser);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        String name = document.getString("name");
+                        String mobile = document.getString("mobile");
+                        mName.setText(name);
+                    }
+                }
+            }
+        });
+        /*
+        db.collection("Students").document(currentUser)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    if(task.getResult().exists()){
+                        String name = task.getResult().getString("name");
+                        mName.setText(name);
+                    }
+                }
+            }
+        });
+
+        /*
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String name= Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
-                String mobileNo=dataSnapshot.child("mobile").getValue().toString();
+                //String name= Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
+//                String mobileNo=dataSnapshot.child("mobile").getValue().toString();
                 final String image=dataSnapshot.child("image").getValue().toString();
-                mName.setText(name);
-                mMobile.setText(mobileNo);
+                //mName.setText(name);
+              //  mMobile.setText(mobileNo);
 
                 //Work on Progress.
                 if(image.equals("default")){
@@ -150,7 +188,7 @@ public class ProfileS extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
+*/
         //Select image from gallery.
         img_btn.setOnClickListener(new View.OnClickListener() {
             @Override

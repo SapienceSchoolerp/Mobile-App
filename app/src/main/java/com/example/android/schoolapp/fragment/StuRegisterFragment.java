@@ -36,10 +36,9 @@ public class StuRegisterFragment extends Fragment {
 
     EditText name, email, mobile, mClass, password;
     Button registerBtn;
-   // FirebaseUser firebaseUser;
+    FirebaseUser firebaseUser;
 
     private FirebaseFirestore db;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -51,9 +50,8 @@ public class StuRegisterFragment extends Fragment {
 
         db=FirebaseFirestore.getInstance();
 
-        //
         name = v.findViewById(R.id.StuUserName);
-         email = v.findViewById(R.id.StuUserEmail);
+        email = v.findViewById(R.id.StuUserEmail);
         mobile = v.findViewById(R.id.StuUserPhone);
         password = v.findViewById(R.id.StuUserPassword);
 
@@ -83,17 +81,45 @@ public class StuRegisterFragment extends Fragment {
     //Register New User as Student.
     private void registerUser(final String name, String email, String password, final String mobile) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        //firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Map<String,Object> userMap=new HashMap<>();
+                            HashMap<String,Object> userMap=new HashMap<>();
                             userMap.put("name",name);
                             userMap.put("mobile",mobile);
                             userMap.put("image","default");
 
+                            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                            final String currentUser=firebaseUser.getUid();
+
+                            db.collection("Students").document(currentUser)
+                                    .set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Intent intent = new Intent(getContext(),MainActivity.class);
+                                    startActivity(intent);
+                                    Toast.makeText(getContext(),"Register successfully",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+/*
                             db.collection("Students").add(userMap)
+                                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                                            if(task.isSuccessful()){
+                                                Intent intent = new Intent(getContext(),MainActivity.class);
+                                                startActivity(intent);
+                                                Toast.makeText(getContext(),"Register successfully",Toast.LENGTH_SHORT).show();
+                                            }else {
+                                                Toast.makeText(getContext(),"Error in register",Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                    /*
                                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                         @Override
                                         public void onSuccess(DocumentReference documentReference) {
@@ -106,7 +132,7 @@ public class StuRegisterFragment extends Fragment {
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(getContext(),"Error in Registering",Toast.LENGTH_SHORT).show();
                                 }
-                            });
+                            });*/
 
                           /*  FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                             String uid = currentUser.getUid();

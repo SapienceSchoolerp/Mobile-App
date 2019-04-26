@@ -129,7 +129,8 @@ public class CommentActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        Query query = db.collection("Comments");
+        Query query = db.collection("Comments")
+                .orderBy("",Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<Comments> options =
                 new FirestoreRecyclerOptions.Builder<Comments>()
@@ -182,6 +183,7 @@ private void getComment(){
     }
 
     //Work on that
+
     private void ValidateComment(String username) {
         String comment = mComment.getText().toString();
 

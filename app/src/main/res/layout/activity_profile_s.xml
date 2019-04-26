@@ -18,7 +18,6 @@
         android:layout_below="@+id/bar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:adjustViewBounds="true"
         android:src="@drawable/ic_person" />
 
     <Button
