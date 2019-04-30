@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#e0f2f1"
     android:orientation="vertical"
     tools:context=".RegisterActivity">
 
@@ -15,6 +16,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
         android:text="Register Account"
+        android:textColor="#000"
         android:textSize="25sp" />
 
     <LinearLayout
@@ -31,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="7dp"
             android:layout_marginRight="7dp"
+            android:background="@drawable/button_rectangle"
             android:text="@string/student" />
 
         <Button
@@ -39,7 +42,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
             android:layout_marginLeft="7dp"
+            android:background="@drawable/button_rectangle"
             android:text="@string/teacher" />
+
     </LinearLayout>
 
     <FrameLayout
@@ -70,12 +75,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@+id/txt2"
             android:layout_toRightOf="@+id/txt2"
             android:text="@string/login"
             android:textAllCaps="true"
             android:textColor="#000"
-            android:textStyle="bold"
-            android:layout_toEndOf="@+id/txt2" />
-
+            android:textStyle="bold" />
     </RelativeLayout>
+
 </RelativeLayout>

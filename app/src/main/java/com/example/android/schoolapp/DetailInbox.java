@@ -12,7 +12,6 @@ import android.view.View;
 
 import com.example.android.schoolapp.adapter.DetailAdapter;
 import com.example.android.schoolapp.model.DetailData;
-import com.example.android.schoolapp.model.InboxData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public class DetailInbox extends AppCompatActivity {
         list.add(new DetailData("Ms. Leo", " A narrative is a report of connected events, real or imaginary, presented in a sequence of written or spoken words, or still or moving images, or both.", ""));
 
         RecyclerView recyclerView = findViewById(R.id.detailRecyclerView);
-        adapter=new DetailAdapter(this, list);
+        adapter = new DetailAdapter(this, list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
