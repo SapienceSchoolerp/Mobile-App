@@ -1,6 +1,8 @@
 package com.example.android.schoolapp.model;
 
-public class Question {
+import com.example.android.schoolapp.QuestionPostId;
+
+public class Question extends QuestionPostId {
 
     private String id;
     private String name;

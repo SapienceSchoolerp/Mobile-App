@@ -13,6 +13,12 @@ import android.widget.TextView;
 import com.example.android.schoolapp.CommentActivity;
 import com.example.android.schoolapp.R;
 import com.example.android.schoolapp.model.Question;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -36,6 +42,8 @@ public class KnitAdapter extends RecyclerView.Adapter<KnitAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
+        final String questionId = questionList.get(i).QuestionPPostId;
+
         final Question question = questionList.get(i);
         viewHolder.mQuestion.setText(question.getQuestion());
         viewHolder.mName.setText(question.getName());
@@ -44,7 +52,11 @@ public class KnitAdapter extends RecyclerView.Adapter<KnitAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, CommentActivity.class);
+                intent.putExtra("questionId",questionId);
                 context.startActivity(intent);
+
+                //FirebaseFirestore db = FirebaseFirestore.getInstance();
+
             }
         });
     }
@@ -59,7 +71,7 @@ public class KnitAdapter extends RecyclerView.Adapter<KnitAdapter.ViewHolder> {
         TextView mQuestion, mName;
         Button btnAnswer;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mQuestion = itemView.findViewById(R.id.question);

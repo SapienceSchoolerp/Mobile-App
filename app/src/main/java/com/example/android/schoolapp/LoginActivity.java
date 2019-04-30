@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
         auth=FirebaseAuth.getInstance();
 
         email=findViewById(R.id.login_email);

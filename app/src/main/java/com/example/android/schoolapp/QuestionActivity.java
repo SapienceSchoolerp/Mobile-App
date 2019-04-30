@@ -4,22 +4,15 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,7 +34,7 @@ public class QuestionActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.bar);
         setSupportActionBar(toolbar);
 
-        db=FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         getSupportActionBar().setTitle("Question");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -74,16 +67,18 @@ public class QuestionActivity extends AppCompatActivity {
     private void postQuestion(final String question) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        String currentUser=auth.getCurrentUser().getUid();
+        String currentUser = auth.getCurrentUser().getUid();
         db.collection("Students").document(currentUser).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String username = documentSnapshot.getString("name");
 
-                        HashMap<String,String> postMap = new HashMap<>();
-                        postMap.put("question",question);
-                        postMap.put("name",username);
+                        HashMap<String, String> postMap = new HashMap<>();
+                        postMap.put("question", question);
+                        postMap.put("name", username);
+
+
 
                         db.collection("Question").add(postMap)
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -94,7 +89,7 @@ public class QuestionActivity extends AppCompatActivity {
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(QuestionActivity.this,"Error in posting question",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(QuestionActivity.this, "Error in posting question", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

@@ -96,6 +96,7 @@ public class CommentActivity extends AppCompatActivity {
     }
 
 
+    //Get all data in firestore recycler view adapter.
     @Override
     protected void onStart() {
         super.onStart();
@@ -141,17 +142,40 @@ public class CommentActivity extends AppCompatActivity {
         }
     }
 
-
+    //Put comment/answer on question.
     private void ValidateComment(String username) {
         String comment = mComment.getText().toString();
 
         if (TextUtils.isEmpty(comment)) {
             Toast.makeText(this, "Please write something", Toast.LENGTH_SHORT).show();
         } else {
+
+            Bundle bundle = getIntent().getExtras();
+            assert bundle != null;
+            String questionId = bundle.getString("questionId");
+
             HashMap<String, Object> commentMap = new HashMap<>();
             commentMap.put("comment", comment);
             commentMap.put("name", username);
 
+            // db.collection("Question").document("").collection("").add(commentMap);
+
+            //String docId = db.collection("Question").getId();
+
+            assert questionId != null;
+            db.collection("Question").document(questionId).collection("Comments").document(currentUser).set(commentMap)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getApplicationContext(),"Successfully posting comment",Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(CommentActivity.this, "Error in posting", Toast.LENGTH_SHORT).show();
+                }
+            });
+            /*
             db.collection("Comments").add(commentMap)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
@@ -163,7 +187,7 @@ public class CommentActivity extends AppCompatActivity {
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(CommentActivity.this, "Error in commenting", Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
         }
     }
 }
