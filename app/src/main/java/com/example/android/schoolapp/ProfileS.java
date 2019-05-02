@@ -16,31 +16,29 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
+
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 
 import java.util.Calendar;
-import java.util.Map;
+
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -48,7 +46,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileS extends AppCompatActivity {
 
     private static final int GALLERY_PICK = 1;
-    public static final String TAG = "MyActivity";
+
     CircleImageView circleImageView;
     TextView mName, mMobile, date_ofBirth;
     Button img_btn;
@@ -67,7 +65,7 @@ public class ProfileS extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_s);
 
-        db=FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         circleImageView = findViewById(R.id.disImg);
         mName = findViewById(R.id.profileUsername2);
@@ -116,9 +114,9 @@ public class ProfileS extends AppCompatActivity {
         String currentUser = firebaseUser.getUid();*/
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String currentUser_id =firebaseUser.getUid();
+        String currentUser_id = firebaseUser.getUid();
 
-        Log.d("***","User ID" + currentUser_id);
+        Log.d("***", "User ID" + currentUser_id);
 
         DocumentReference docRef = db.collection("Students").document(currentUser_id);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -132,9 +130,9 @@ public class ProfileS extends AppCompatActivity {
                         mName.setText(name);
                         mMobile.setText(mobile);
 
-                        if(image.equals("default")){
+                        if (image.equals("default")) {
                             circleImageView.setImageResource(R.drawable.ic_person);
-                        }else{
+                        } else {
                             Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE).into(circleImageView, new Callback() {
                                 @Override
                                 public void onSuccess() {
@@ -152,52 +150,7 @@ public class ProfileS extends AppCompatActivity {
                 }
             }
         });
-        /*
-        db.collection("Students").document(currentUser)
-                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    if(task.getResult().exists()){
-                        String name = task.getResult().getString("name");
-                        mName.setText(name);
-                    }
-                }
-            }
-        });
 
-        /*
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //String name= Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
-//                String mobileNo=dataSnapshot.child("mobile").getValue().toString();
-                final String image=dataSnapshot.child("image").getValue().toString();
-                //mName.setText(name);
-              //  mMobile.setText(mobileNo);
-
-                //Work on Progress.
-                if(image.equals("default")){
-                    circleImageView.setImageResource(R.drawable.ic_person);
-                }else{
-                    Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE).into(circleImageView, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-                            Picasso.get().load(image).into(circleImageView);
-                        }
-                    });
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-*/
         //Select image from gallery.
         img_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,7 +158,6 @@ public class ProfileS extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-
                 startActivityForResult(Intent.createChooser(intent, "SELECT IMAGE"), GALLERY_PICK);
             }
         });
@@ -237,6 +189,7 @@ public class ProfileS extends AppCompatActivity {
             Uri imageUrl = data.getData();
 
             CropImage.activity(imageUrl)
+                    .setGuidelines(CropImageView.Guidelines.ON)
                     .setAspectRatio(1, 1)
                     .start(this);
         }
@@ -248,17 +201,18 @@ public class ProfileS extends AppCompatActivity {
                 Uri resultUri = result.getUri();
 
                 FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                final String currentUser_id =firebaseUser.getUid();
+                final String currentUser_id = firebaseUser.getUid();
 
                 final StorageReference ref = img_storageRef.child("profile_images").child(currentUser_id + ".jpg");
-                StorageTask uploadTask = ref.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                ref.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
                                 db.collection("Students").document(currentUser_id)
-                                        .update("image",uri.toString());
+                                        .update("image", uri.toString());
                             }
                         });
                     }
