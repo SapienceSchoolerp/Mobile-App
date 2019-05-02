@@ -10,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,6 +40,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 
 import java.util.Calendar;
+import java.util.Map;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -54,8 +57,8 @@ public class ProfileS extends AppCompatActivity {
     Calendar c;
     DatePickerDialog dpd;
 
-    private DatabaseReference reference;
-    private FirebaseUser firebaseUser;
+
+    private FirebaseFirestore db;
     private StorageReference img_storageRef;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -64,11 +67,13 @@ public class ProfileS extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_s);
 
+        db=FirebaseFirestore.getInstance();
+
         circleImageView = findViewById(R.id.disImg);
         mName = findViewById(R.id.profileUsername2);
         mMobile = findViewById(R.id.mobile2);
         img_btn = findViewById(R.id.imageBtn);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseFirestore.getInstance();
         //sp=getSharedPreferences(USER_PREF, Context.MODE_PRIVATE);
 
         btnDate = findViewById(R.id.dateBtn);
@@ -106,10 +111,16 @@ public class ProfileS extends AppCompatActivity {
         });
         img_storageRef = FirebaseStorage.getInstance().getReference();
 
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String currentUser = firebaseUser.getUid();
+        //private DatabaseReference reference;
+        /*FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUser = firebaseUser.getUid();*/
 
-        DocumentReference docRef = db.collection("Students").document(currentUser);
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUser_id =firebaseUser.getUid();
+
+        Log.d("***","User ID" + currentUser_id);
+
+        DocumentReference docRef = db.collection("Students").document(currentUser_id);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -236,10 +247,36 @@ public class ProfileS extends AppCompatActivity {
                 assert result != null;
                 Uri resultUri = result.getUri();
 
-                String currentUser_id = firebaseUser.getUid();
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                final String currentUser_id =firebaseUser.getUid();
+
                 final StorageReference ref = img_storageRef.child("profile_images").child(currentUser_id + ".jpg");
-                StorageTask uploadTask = ref.putFile(resultUri);
-                uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                StorageTask uploadTask = ref.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                db.collection("Students").document(currentUser_id)
+                                        .update("image",uri.toString());
+                            }
+                        });
+                    }
+                });
+                        /*
+                        addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        if(task.isSuccessful()){
+
+                        }else{
+                            String error = task.getException().getMessage();
+                            Toast.makeText(ProfileS.this,"Error:" + error,Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+              /*  uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                         if (!task.isSuccessful()) {
@@ -264,7 +301,7 @@ public class ProfileS extends AppCompatActivity {
                             Toast.makeText(ProfileS.this, "Error Loading Image", Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                });*/
             }
         }
     }

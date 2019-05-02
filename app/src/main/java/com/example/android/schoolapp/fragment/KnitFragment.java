@@ -68,7 +68,8 @@ public class KnitFragment extends Fragment {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                            Question question = doc.getDocument().toObject(Question.class);
+                            String questionId = doc.getDocument().getId();
+                            Question question = doc.getDocument().toObject(Question.class).withId(questionId);
                             questionList.add(question);
                         }
                         adapter = new KnitAdapter(getContext(), questionList);
