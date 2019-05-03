@@ -121,43 +121,5 @@ public class QuestionActivity extends AppCompatActivity {
                });
             }
         });*/
-
-/*
-        HashMap<String,String> quesMap = new HashMap<>();
-        quesMap.put("question",question);
-        quesMap.put("name", name[0]);
-*/
-
-
-   /* FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = currentUser.getUid();
-        UserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-        PostRef = FirebaseDatabase.getInstance().getReference().child("Post").child(uid);
-
-        UserRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                String name = dataSnapshot.child("name").getValue().toString();
-
-                HashMap<String, Object> postMap = new HashMap<>();
-                postMap.put("name", name);
-                postMap.put("question", question);
-
-                PostRef.setValue(postMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(QuestionActivity.this, "Post Successfully uploaded", Toast.LENGTH_SHORT).show();
-                        } else {
-                           Toast.makeText(QuestionActivity.this, "Error in Uploading", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });*/
     }
 }

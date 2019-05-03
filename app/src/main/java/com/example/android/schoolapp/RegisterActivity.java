@@ -29,8 +29,8 @@ public class RegisterActivity extends AppCompatActivity {
         setFragment(new StuRegisterFragment());
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        //check user is already exist.
 
+        //check user is already exist.
         if (firebaseUser != null) {
             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
             startActivity(intent);

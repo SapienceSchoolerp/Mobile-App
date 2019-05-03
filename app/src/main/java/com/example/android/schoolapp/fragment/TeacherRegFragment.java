@@ -13,18 +13,11 @@ import android.widget.Toast;
 
 import com.example.android.schoolapp.MainActivity;
 import com.example.android.schoolapp.R;
-import com.example.android.schoolapp.adapter.InboxAdapter;
-import com.example.android.schoolapp.model.Teacher;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -50,7 +43,7 @@ public class TeacherRegFragment extends Fragment {
         mobile = view.findViewById(R.id.edit_TeacherPhone);
         password = view.findViewById(R.id.edit_TeacherPassword);
 
-        db=FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         submitBtn = view.findViewById(R.id.TeacherRegisterBtn);
 
@@ -92,49 +85,22 @@ public class TeacherRegFragment extends Fragment {
                             HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put("name", name);
                             hashMap.put("mobile", mobile);
-                            hashMap.put("image","default");
+                            hashMap.put("image", "default");
 
                             db.collection("Teacher").document(teacherId)
                                     .set(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        Intent intent =new Intent(getContext(),MainActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(intent);
-                                        Toast.makeText(getActivity(),"Register successfully",Toast.LENGTH_SHORT).show();
-                                    }else{
-                                        Toast.makeText(getActivity(),"Error in Registration",Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-
-                                    /*add(hashMap)
-                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                        @Override
-                                        public void onSuccess(DocumentReference documentReference) {
-                                            Toast.makeText(getContext(),"Register successfully",Toast.LENGTH_SHORT).show();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Intent intent = new Intent(getContext(),MainActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
-                                    Toast.makeText(getContext(),"Error in Registering",Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            /*
-                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                                        Intent intent = new Intent(getContext(), MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
+                                        Toast.makeText(getActivity(), "Register successfully", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getActivity(), "Error in Registration", Toast.LENGTH_SHORT).show();
                                     }
                                 }
-                            });*/
+                            });
                         }
                     }
                 });

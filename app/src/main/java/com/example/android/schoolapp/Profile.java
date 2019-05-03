@@ -72,7 +72,6 @@ public class Profile extends AppCompatActivity {
         mMobile = findViewById(R.id.mobile2);
         img_btn = findViewById(R.id.imageBtn);
         FirebaseFirestore.getInstance();
-        //sp=getSharedPreferences(USER_PREF, Context.MODE_PRIVATE);
 
         btnDate = findViewById(R.id.dateBtn);
         date_ofBirth = findViewById(R.id.dateOfBirth2);
@@ -88,8 +87,6 @@ public class Profile extends AppCompatActivity {
                     public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
 
                         date_ofBirth.setText(mDay + "/" + (mMonth + 1) + "/" + mYear);
-                        // save(date_ofBirth.getText().toString());
-                        //loadData();
                     }
                 }, day, month, year);
                 dpd.show();
@@ -159,22 +156,6 @@ public class Profile extends AppCompatActivity {
         });
     }
 
-    /*
-        private void save(String date ){
-            sp=getSharedPreferences("SP_DATE",MODE_PRIVATE);
-
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putString("DATE", date);
-            editor.apply();
-
-            Toast.makeText(this,"Date Saved",Toast.LENGTH_SHORT).show();
-        }
-
-        private void loadData(){
-            String date = sp.getString("DATE",date_ofBirth.getText().toString());
-            date_ofBirth.setText(date);
-        }
-    */
 
     //Crop and Upload image
     @Override
@@ -213,45 +194,6 @@ public class Profile extends AppCompatActivity {
                         });
                     }
                 });
-                        /*
-                        addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if(task.isSuccessful()){
-
-                        }else{
-                            String error = task.getException().getMessage();
-                            Toast.makeText(Profile.this,"Error:" + error,Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-              /*  uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if (!task.isSuccessful()) {
-                            throw task.getException();
-                        }
-                        // Continue with the task to get the download URL
-                        return ref.getDownloadUrl();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        if (task.isSuccessful()) {
-                            Uri downloadUri = task.getResult();
-                            String mUrl = downloadUri.toString();
-                            reference.child("image").setValue(mUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(Profile.this, "Image Loaded SuccessFully", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        } else {
-                            Toast.makeText(Profile.this, "Error Loading Image", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });*/
             }
         }
     }

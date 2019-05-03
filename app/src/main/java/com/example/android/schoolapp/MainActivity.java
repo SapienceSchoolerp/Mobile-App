@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE).into(imageNav, new Callback() {
                                 @Override
                                 public void onSuccess() {
-                                    Log.d("***","Image successfully loaded");
+                                    Log.d("***", "Image successfully loaded");
                                 }
 
                                 @Override
@@ -144,11 +144,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.profile) {
             Intent intent = new Intent(this, Profile.class);
             startActivity(intent);
-
-        } else if (id == R.id.account) {
-            Intent intent = new Intent(this, AccountActivity.class);
-            startActivity(intent);
-
         } else if (id == R.id.rate_us) {
 
         } else if (id == R.id.feedback) {

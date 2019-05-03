@@ -1,6 +1,5 @@
 package com.example.android.schoolapp;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -176,55 +175,6 @@ public class CommentActivity extends AppCompatActivity {
                             }
                         }
                     });
-
-                    /*.document(questionId).collection("Comments").document(currentUser)
-                    .set(commentMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
-                        Toast.makeText(CommentActivity.this,"Answer Posted",Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(CommentActivity.this,"Error in posting question",Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-                    /*.add(commentMap)
-                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(CommentActivity.this, "Answer commented", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(CommentActivity.this, "Error in answering", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(),"Successfully posting comment",Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(CommentActivity.this, "Error in posting", Toast.LENGTH_SHORT).show();
-                }
-            });
-            /*
-            db.collection("Comments").add(commentMap)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(CommentActivity.this, "Commented successfully", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(CommentActivity.this, "Error in commenting", Toast.LENGTH_SHORT).show();
-                }
-            });*/
         }
     }
 }

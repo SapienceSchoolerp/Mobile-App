@@ -26,7 +26,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.detail_list,viewGroup,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.detail_list, viewGroup, false);
         return new DetailAdapter.ViewHolder(view);
     }
 
@@ -42,13 +42,13 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         return dataList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, msg;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            name=itemView.findViewById(R.id.deUserName);
-            msg=itemView.findViewById(R.id.deUserMsg);
+            name = itemView.findViewById(R.id.deUserName);
+            msg = itemView.findViewById(R.id.deUserMsg);
         }
     }
 }
