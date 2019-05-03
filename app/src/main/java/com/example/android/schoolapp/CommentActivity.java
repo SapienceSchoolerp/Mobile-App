@@ -19,8 +19,10 @@ import com.example.android.schoolapp.model.Comments;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,7 +33,6 @@ import java.util.HashMap;
 
 public class CommentActivity extends AppCompatActivity {
 
-    // private DatabaseReference UserRef, PostRef;
     String currentUser;
     FirebaseAuth auth;
 
@@ -101,7 +102,8 @@ public class CommentActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        Query query = db.collection("Comments")
+
+        Query query = db.collection("Question")
                 .orderBy("comment", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<Comments> options =
@@ -158,12 +160,33 @@ public class CommentActivity extends AppCompatActivity {
             commentMap.put("comment", comment);
             commentMap.put("name", username);
 
-            // db.collection("Question").document("").collection("").add(commentMap);
-
-            //String docId = db.collection("Question").getId();
 
             assert questionId != null;
-            db.collection("Question").document(questionId).collection("Comments").document(currentUser).set(commentMap)
+            db.collection("Question").document(questionId).collection("Comments").document(currentUser)
+                    .set(commentMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        Toast.makeText(CommentActivity.this,"Answer Posted",Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(CommentActivity.this,"Error in posting question",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+                    /*.add(commentMap)
+                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(CommentActivity.this, "Answer commented", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(CommentActivity.this, "Error in answering", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

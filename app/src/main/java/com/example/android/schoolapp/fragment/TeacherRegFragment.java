@@ -85,17 +85,31 @@ public class TeacherRegFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            //FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                            //String uid = currentUser.getUid();
 
-                           // DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("").child(uid);
-
+                            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                            String teacherId = firebaseUser.getUid();
 
                             HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put("name", name);
                             hashMap.put("mobile", mobile);
-                            hashMap.put("image", "default");
-                            db.collection("Teacher").add(hashMap)
+                            hashMap.put("image","default");
+
+                            db.collection("Teacher").document(teacherId)
+                                    .set(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Intent intent =new Intent(getContext(),MainActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                        Toast.makeText(getActivity(),"Register successfully",Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(getActivity(),"Error in Registration",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+                                    /*add(hashMap)
                                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                         @Override
                                         public void onSuccess(DocumentReference documentReference) {
@@ -105,6 +119,7 @@ public class TeacherRegFragment extends Fragment {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Intent intent = new Intent(getContext(),MainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                     Toast.makeText(getContext(),"Error in Registering",Toast.LENGTH_SHORT).show();
                                 }
