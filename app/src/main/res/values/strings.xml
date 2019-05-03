@@ -35,6 +35,18 @@
     <string name="name">Name</string>
     <string name="student">Student</string>
     <string name="teacher">Teacher</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="if_already_a_member">if already a member ?</string>
+    <string name="username">Username</string>
+    <string name="mobile_no">Mobile No.</string>
+    <string name="submit">Submit</string>
+    <string name="ask">Ask</string>
+    <string name="type">Type</string>
+    <string name="mobile">Mobile</string>
+    <string name="mClass">Class</string>
+    <string name="date_of_birth">Date Of Birth</string>
+    <string name="dd_mm_yy">dd/mm/yy</string>
+    <string name="change_image">Change Image</string>
 </resources>

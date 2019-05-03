@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.schoolapp.ApiInterface;
+import com.example.android.schoolapp.Networking.ApiInterface;
 import com.example.android.schoolapp.R;
-import com.example.android.schoolapp.RetrofitClientInstance;
+import com.example.android.schoolapp.Networking.RetrofitClientInstance;
 import com.example.android.schoolapp.adapter.FuzeAdapter;
 import com.example.android.schoolapp.model.FuzePhoto;
 

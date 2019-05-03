@@ -10,7 +10,7 @@
         android:id="@+id/StuUserName"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        android:hint="@string/username"
         android:layout_marginTop="20dp"
         android:inputType="text"
         android:layout_gravity="center_horizontal"
@@ -19,7 +19,7 @@
         android:id="@+id/StuUserPhone"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="Mobile No."
+        android:hint="@string/mobile_no"
         android:layout_marginTop="20dp"
         android:inputType="phone"
         android:layout_gravity="center_horizontal"
@@ -30,7 +30,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:layout_gravity="center_horizontal"
         />
@@ -49,7 +49,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:layout_gravity="center_horizontal"
         />
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
-        android:text="Submit"
+        android:text="@string/submit"
         />
 
 </LinearLayout>

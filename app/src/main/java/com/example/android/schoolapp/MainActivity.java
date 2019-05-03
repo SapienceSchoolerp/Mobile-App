@@ -14,8 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.schoolapp.adapter.PagerAdapter;
@@ -23,11 +21,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -107,37 +100,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
-
-       /* DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser);
-        databaseReference.keepSynced(true);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-             /*   String mName= dataSnapshot.child("name").getValue().toString();
-                final String image=dataSnapshot.child("image").getValue().toString();
-
-                if(image.equals("default")){
-                    imageNav.setImageResource(R.drawable.ic_person);
-                }else{
-                    Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE).into(imageNav, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-                        @Override
-                        public void onError(Exception e) {
-                            Picasso.get().load(image).into(imageNav);
-                        }
-                    });
-                }
-                name.setText(mName);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
     }
 
     @Override
@@ -180,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
             //Handle the profile action
         } else if (id == R.id.profile) {
-            Intent intent = new Intent(this, ProfileS.class);
+            Intent intent = new Intent(this, Profile.class);
             startActivity(intent);
 
         } else if (id == R.id.account) {
