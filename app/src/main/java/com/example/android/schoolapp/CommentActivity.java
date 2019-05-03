@@ -1,5 +1,6 @@
 package com.example.android.schoolapp;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,6 +42,8 @@ public class CommentActivity extends AppCompatActivity {
     EditText mComment;
     RecyclerView recyclerView;
 
+    String questionId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +76,10 @@ public class CommentActivity extends AppCompatActivity {
 
         ImageButton post = findViewById(R.id.btn_send);
 
+        Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
+        questionId = bundle.getString("questionId");
+
         //Get current Username.
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +110,7 @@ public class CommentActivity extends AppCompatActivity {
         super.onStart();
 
 
-        Query query = db.collection("Question")
+        Query query = db.collection("Question/" + questionId + "/Comments")
                 .orderBy("comment", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<Comments> options =
@@ -152,17 +159,25 @@ public class CommentActivity extends AppCompatActivity {
             Toast.makeText(this, "Please write something", Toast.LENGTH_SHORT).show();
         } else {
 
-            Bundle bundle = getIntent().getExtras();
-            assert bundle != null;
-            String questionId = bundle.getString("questionId");
-
             HashMap<String, Object> commentMap = new HashMap<>();
             commentMap.put("comment", comment);
             commentMap.put("name", username);
 
-
             assert questionId != null;
-            db.collection("Question").document(questionId).collection("Comments").document(currentUser)
+            db.collection("Question/" + questionId + "/Comments").add(commentMap)
+                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(CommentActivity.this, "Comment successfully", Toast.LENGTH_SHORT).show();
+                                mComment.setText("");
+                            } else {
+                                Toast.makeText(CommentActivity.this, "Error in posting comment" + task.getException(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+                    /*.document(questionId).collection("Comments").document(currentUser)
                     .set(commentMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -185,7 +200,6 @@ public class CommentActivity extends AppCompatActivity {
                             }
                         }
                     });
-
 
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

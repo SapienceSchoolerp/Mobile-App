@@ -74,6 +74,8 @@ public class KnitFragment extends Fragment {
                         }
                         adapter = new KnitAdapter(getContext(), questionList);
                         recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override

@@ -109,10 +109,6 @@ public class ProfileS extends AppCompatActivity {
         });
         img_storageRef = FirebaseStorage.getInstance().getReference();
 
-        //private DatabaseReference reference;
-        /*FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String currentUser = firebaseUser.getUid();*/
-
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String currentUser_id = firebaseUser.getUid();
 

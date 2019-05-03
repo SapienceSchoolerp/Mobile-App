@@ -47,4 +47,5 @@
         android:layout_marginTop="25dp"
         android:background="@drawable/button_rectangle"
         android:text="Login" />
+
 </LinearLayout>
