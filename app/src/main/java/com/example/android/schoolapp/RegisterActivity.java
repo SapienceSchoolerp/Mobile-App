@@ -26,16 +26,15 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        setFragment(new StuRegisterFragment());
-
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
         //check user is already exist.
         if (firebaseUser != null) {
             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }
+
+        setFragment(new StuRegisterFragment());
 
         btnStudent = findViewById(R.id.btnStudent);
         btnTeacher = findViewById(R.id.btnTeacher);

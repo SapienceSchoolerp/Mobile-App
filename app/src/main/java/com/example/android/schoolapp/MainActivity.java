@@ -35,16 +35,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView name;
     CircleImageView imageNav;
 
-
     FirebaseFirestore db;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = FirebaseFirestore.getInstance();
 
         ViewPager viewPager = findViewById(R.id.viewPager);
+        viewPager.setOffscreenPageLimit(3);
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
 

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -168,8 +169,9 @@ public class CommentActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(CommentActivity.this, "Comment successfully", Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(CommentActivity.this, "Comment successfully", Toast.LENGTH_SHORT).show();
                                 mComment.setText("");
+                                Log.d("***","Comment Successfully posted");
                             } else {
                                 Toast.makeText(CommentActivity.this, "Error in posting comment" + task.getException(), Toast.LENGTH_SHORT).show();
                             }
