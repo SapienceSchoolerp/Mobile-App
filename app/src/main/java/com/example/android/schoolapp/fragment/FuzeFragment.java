@@ -24,7 +24,6 @@ import retrofit2.Response;
 
 public class FuzeFragment extends Fragment {
 
-    private FuzeAdapter adapter;
     private RecyclerView recyclerView;
 
     @Nullable
@@ -52,7 +51,7 @@ public class FuzeFragment extends Fragment {
     }
 
     private void loadData(List<FuzePhoto> photoList) {
-        adapter = new FuzeAdapter(photoList, getContext());
+        FuzeAdapter adapter = new FuzeAdapter(photoList, getContext());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
