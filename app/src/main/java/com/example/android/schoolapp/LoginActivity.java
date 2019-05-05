@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText email,password;
+    EditText email, password;
     Button btn;
 
     FirebaseAuth auth;
@@ -36,41 +36,40 @@ public class LoginActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               finish();
+                finish();
             }
         });
 
-        auth=FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
 
-        email=findViewById(R.id.login_email);
-        password=findViewById(R.id.login_password);
-        btn=findViewById(R.id.login_btn);
+        email = findViewById(R.id.login_email);
+        password = findViewById(R.id.login_password);
+        btn = findViewById(R.id.login_btn);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String txt_email=email.getText().toString();
-                String txt_password=password.getText().toString();
+                String txt_email = email.getText().toString();
+                String txt_password = password.getText().toString();
 
-                if(TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
-                    Toast.makeText(LoginActivity.this,"All fields are required",Toast.LENGTH_SHORT).show();
-                }else {
-                    auth.signInWithEmailAndPassword(txt_email,txt_password)
+                if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)) {
+                    Toast.makeText(LoginActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
+                } else {
+                    auth.signInWithEmailAndPassword(txt_email, txt_password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if(task.isSuccessful()){
-                                        //Solve Error in Login Activity ?
-                                        Intent intent =new Intent(LoginActivity.this,MainActivity.class);
+                                    if (task.isSuccessful()) {
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
-                                    }else{
-                                        Toast.makeText(LoginActivity.this,"Authentication Failed",Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
-                        }
-                   }
-               });
-         }
+                }
+            }
+        });
+    }
 }

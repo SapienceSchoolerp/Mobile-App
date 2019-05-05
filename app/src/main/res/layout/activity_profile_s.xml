@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ProfileS">
+    tools:context=".Profile">
 
     <include
         android:id="@+id/bar"
@@ -27,7 +26,7 @@
         android:layout_below="@+id/disImg"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Change Image" />
+        android:text="@string/change_image" />
 
     <ImageButton
         android:id="@+id/dateBtn"
@@ -50,7 +49,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="10dp"
-        android:text="Name"
+        android:textColor="@color/black"
+        android:text="@string/name"
         android:textSize="17sp"
         android:textStyle="bold" />
 
@@ -62,7 +62,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="5dp"
-        android:text="Name"
+        android:text="@string/name"
         android:textSize="20sp" />
 
     <TextView
@@ -71,8 +71,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/profileUsername2"
         android:layout_marginStart="10dp"
+        android:textColor="@color/black"
         android:layout_marginLeft="10dp"
-        android:text="Class"
+        android:text="@string/mClass"
         android:textSize="17sp"
         android:textStyle="bold" />
 
@@ -84,17 +85,18 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="5dp"
-        android:text="Class"
+        android:text="@string/mClass"
         android:textSize="20sp" />
 
     <TextView
         android:id="@+id/mobile1"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/class2"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:text="Mobile"
+        android:text="@string/mobile"
         android:textSize="17sp"
         android:textStyle="bold" />
 
@@ -106,7 +108,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="5dp"
-        android:text="Mobile"
+        android:text="@string/mobile"
         android:textSize="20sp" />
 
     <TextView
@@ -115,8 +117,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/mobile2"
         android:layout_marginStart="10dp"
+        android:textColor="@color/black"
         android:layout_marginLeft="10dp"
-        android:text="Date Of Birth"
+        android:text="@string/date_of_birth"
         android:textSize="17sp"
         android:textStyle="bold" />
 
@@ -128,7 +131,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="5dp"
-        android:text="dd/mm/yy"
+        android:text="@string/dd_mm_yy"
         android:textSize="20sp" />
 
 </RelativeLayout>

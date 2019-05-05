@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class FuzeAdapter extends RecyclerView.Adapter<FuzeAdapter.ViewHolder>{
+public class FuzeAdapter extends RecyclerView.Adapter<FuzeAdapter.ViewHolder> {
 
     private List<FuzePhoto> dataList;
     private Context context;
@@ -30,7 +30,7 @@ public class FuzeAdapter extends RecyclerView.Adapter<FuzeAdapter.ViewHolder>{
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.fuze_list,viewGroup,false);
+        View view = inflater.inflate(R.layout.fuze_list, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -52,7 +52,7 @@ public class FuzeAdapter extends RecyclerView.Adapter<FuzeAdapter.ViewHolder>{
         return dataList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView;
         private ImageView coverImage;

@@ -52,7 +52,7 @@ public class KnitAdapter extends RecyclerView.Adapter<KnitAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, CommentActivity.class);
-                intent.putExtra("questionId",questionId);
+                intent.putExtra("questionId", questionId);
                 context.startActivity(intent);
 
                 //FirebaseFirestore db = FirebaseFirestore.getInstance();

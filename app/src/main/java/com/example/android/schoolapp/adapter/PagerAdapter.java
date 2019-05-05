@@ -11,7 +11,7 @@ import com.example.android.schoolapp.fragment.InboxFragment;
 import com.example.android.schoolapp.fragment.KnitFragment;
 
 public class PagerAdapter extends FragmentPagerAdapter {
-    private String tabTitle[]=new String[]{"INBOX","CHATS","KNIT","FUZE"};
+    private String tabTitle[] = new String[]{"INBOX", "CHATS", "KNIT", "FUZE"};
 
     public PagerAdapter(FragmentManager fm) {
         super(fm);
@@ -19,7 +19,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        switch(i){
+        switch (i) {
             case 0:
                 return new InboxFragment();
 

@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.schoolapp.ApiInterface;
+import com.example.android.schoolapp.Networking.ApiInterface;
 import com.example.android.schoolapp.R;
-import com.example.android.schoolapp.RetrofitClientInstance;
+import com.example.android.schoolapp.Networking.RetrofitClientInstance;
 import com.example.android.schoolapp.adapter.FuzeAdapter;
 import com.example.android.schoolapp.model.FuzePhoto;
 
@@ -30,7 +30,7 @@ public class FuzeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fuze_fragment,container,false);
+        View view = inflater.inflate(R.layout.fuze_fragment, container, false);
 
         recyclerView = view.findViewById(R.id.fuzeRecyclerView);
 
@@ -51,8 +51,8 @@ public class FuzeFragment extends Fragment {
         return view;
     }
 
-    private void loadData(List<FuzePhoto> photoList){
-        adapter =new FuzeAdapter(photoList,getContext());
+    private void loadData(List<FuzePhoto> photoList) {
+        adapter = new FuzeAdapter(photoList, getContext());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

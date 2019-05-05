@@ -41,6 +41,8 @@ public class CommentActivity extends AppCompatActivity {
     EditText mComment;
     RecyclerView recyclerView;
 
+    String questionId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +75,10 @@ public class CommentActivity extends AppCompatActivity {
 
         ImageButton post = findViewById(R.id.btn_send);
 
+        Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
+        questionId = bundle.getString("questionId");
+
         //Get current Username.
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +109,7 @@ public class CommentActivity extends AppCompatActivity {
         super.onStart();
 
 
-        Query query = db.collection("Question")
+        Query query = db.collection("Question/" + questionId + "/Comments")
                 .orderBy("comment", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<Comments> options =
@@ -152,65 +158,23 @@ public class CommentActivity extends AppCompatActivity {
             Toast.makeText(this, "Please write something", Toast.LENGTH_SHORT).show();
         } else {
 
-            Bundle bundle = getIntent().getExtras();
-            assert bundle != null;
-            String questionId = bundle.getString("questionId");
-
             HashMap<String, Object> commentMap = new HashMap<>();
             commentMap.put("comment", comment);
             commentMap.put("name", username);
 
-
             assert questionId != null;
-            db.collection("Question").document(questionId).collection("Comments").document(currentUser)
-                    .set(commentMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
-                        Toast.makeText(CommentActivity.this,"Answer Posted",Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(CommentActivity.this,"Error in posting question",Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-                    /*.add(commentMap)
+            db.collection("Question/" + questionId + "/Comments").add(commentMap)
                     .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(CommentActivity.this, "Answer commented", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CommentActivity.this, "Comment successfully", Toast.LENGTH_SHORT).show();
+                                mComment.setText("");
                             } else {
-                                Toast.makeText(CommentActivity.this, "Error in answering", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CommentActivity.this, "Error in posting comment" + task.getException(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
-
-
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(),"Successfully posting comment",Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(CommentActivity.this, "Error in posting", Toast.LENGTH_SHORT).show();
-                }
-            });
-            /*
-            db.collection("Comments").add(commentMap)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(CommentActivity.this, "Commented successfully", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(CommentActivity.this, "Error in commenting", Toast.LENGTH_SHORT).show();
-                }
-            });*/
         }
     }
 }
