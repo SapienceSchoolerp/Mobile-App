@@ -15,6 +15,8 @@ import com.example.android.schoolapp.fragment.TeacherRegFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
+
 public class RegisterActivity extends AppCompatActivity {
 
     FirebaseUser firebaseUser;
@@ -25,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        //ButterKnife.bind(this);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         //check user is already exist.

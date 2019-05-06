@@ -59,6 +59,9 @@ public class Profile extends AppCompatActivity {
     private FirebaseFirestore db;
     private StorageReference img_storageRef;
 
+    String name,mobile;
+
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -87,6 +90,9 @@ public class Profile extends AppCompatActivity {
                     public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
 
                         date_ofBirth.setText(mDay + "/" + (mMonth + 1) + "/" + mYear);
+                        String date = date_ofBirth.getText().toString();
+                        Log.d("***","=>" + date);
+
                     }
                 }, day, month, year);
                 dpd.show();
@@ -117,8 +123,8 @@ public class Profile extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        String name = document.getString("name");
-                        String mobile = document.getString("mobile");
+                        name = document.getString("name");
+                        mobile = document.getString("mobile");
                         final String image = document.getString("image");
                         mName.setText(name);
                         mMobile.setText(mobile);
@@ -154,14 +160,13 @@ public class Profile extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "SELECT IMAGE"), GALLERY_PICK);
             }
         });
+
     }
-
-
     //Crop and Upload image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             assert data != null;
             Uri imageUrl = data.getData();
 

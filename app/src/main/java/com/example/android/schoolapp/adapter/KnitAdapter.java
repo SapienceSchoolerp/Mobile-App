@@ -55,8 +55,6 @@ public class KnitAdapter extends RecyclerView.Adapter<KnitAdapter.ViewHolder> {
                 intent.putExtra("questionId", questionId);
                 context.startActivity(intent);
 
-                //FirebaseFirestore db = FirebaseFirestore.getInstance();
-
             }
         });
     }

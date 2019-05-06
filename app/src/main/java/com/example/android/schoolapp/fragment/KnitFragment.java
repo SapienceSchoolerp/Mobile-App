@@ -42,7 +42,11 @@ public class KnitFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.knit_fragment, container, false);
         recyclerView = view.findViewById(R.id.recyclerViewKnit);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager ll = new LinearLayoutManager(getContext());
+        ll.setReverseLayout(true);
+        ll.setStackFromEnd(true);
+        recyclerView.setLayoutManager(ll);
+        recyclerView.setHasFixedSize(true);
 
         db = FirebaseFirestore.getInstance();
 
@@ -82,42 +86,5 @@ public class KnitFragment extends Fragment {
             public void onFailure(@NonNull Exception e) {
             }
         });
-/*
-        db.collection("Question").
-                get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for(QueryDocumentSnapshot document : task.getResult()){
-                                Log.d("***",document.getId() + "=>" +document.getData());
-                            }
-                        }else{
-                            Log.d("***", "Error getting documents",task.getException());
-                        }
-                    }
-                });
-
-        /*
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Post");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Question question = snapshot.getValue(Question.class);
-                    questionList.add(question);
-                }
-                adapter = new KnitAdapter(getContext(), questionList);
-                recyclerView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-*/
     }
 }

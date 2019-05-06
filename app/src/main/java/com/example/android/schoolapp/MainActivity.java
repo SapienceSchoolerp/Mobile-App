@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     CircleImageView imageNav;
 
     FirebaseFirestore db;
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -43,10 +44,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         db = FirebaseFirestore.getInstance();
 
-        ViewPager viewPager = findViewById(R.id.viewPager);
-        viewPager.setOffscreenPageLimit(3);
+        viewPager = findViewById(R.id.viewPager);
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(3);
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
