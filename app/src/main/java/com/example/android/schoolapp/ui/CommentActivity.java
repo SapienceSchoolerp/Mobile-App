@@ -1,4 +1,4 @@
-package com.example.android.schoolapp;
+package com.example.android.schoolapp.ui;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.schoolapp.R;
 import com.example.android.schoolapp.model.Comments;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;

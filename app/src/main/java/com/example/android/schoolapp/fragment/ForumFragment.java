@@ -13,9 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.schoolapp.QuestionActivity;
+import com.example.android.schoolapp.ui.QuestionActivity;
 import com.example.android.schoolapp.R;
-import com.example.android.schoolapp.adapter.KnitAdapter;
+import com.example.android.schoolapp.adapter.ForumAdapter;
 import com.example.android.schoolapp.model.Question;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,14 +26,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KnitFragment extends Fragment {
+public class ForumFragment extends Fragment {
 
-    public KnitFragment() {
+    public ForumFragment() {
     }
 
     private List<Question> questionList;
     RecyclerView recyclerView;
-    private KnitAdapter adapter;
+    private ForumAdapter adapter;
 
     FirebaseFirestore db;
 
@@ -76,7 +76,7 @@ public class KnitFragment extends Fragment {
                             Question question = doc.getDocument().toObject(Question.class).withId(questionId);
                             questionList.add(question);
                         }
-                        adapter = new KnitAdapter(getContext(), questionList);
+                        adapter = new ForumAdapter(getContext(), questionList);
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
 

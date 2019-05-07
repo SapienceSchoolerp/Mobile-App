@@ -1,16 +1,13 @@
 package com.example.android.schoolapp.adapter;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.ViewGroup;
 
-import com.example.android.schoolapp.fragment.ChatsFragment;
-import com.example.android.schoolapp.fragment.FuzeFragment;
+import com.example.android.schoolapp.fragment.FeedFragment;
 import com.example.android.schoolapp.fragment.InboxFragment;
-import com.example.android.schoolapp.fragment.KnitFragment;
+import com.example.android.schoolapp.fragment.ForumFragment;
 
 public class PagerAdapter extends FragmentPagerAdapter {
     private String[] tabTitle = new String[]{"INBOX", "FORUM", "FEED"};
@@ -25,14 +22,11 @@ public class PagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new InboxFragment();
 
-            /*case 1:
-                return new ChatsFragment();
-*/
             case 1:
-                return new KnitFragment();
+                return new ForumFragment();
 
             case 2:
-                return new FuzeFragment();
+                return new FeedFragment();
 
             default:
                 return null;

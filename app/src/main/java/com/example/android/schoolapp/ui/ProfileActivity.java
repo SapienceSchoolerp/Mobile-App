@@ -1,4 +1,4 @@
-package com.example.android.schoolapp;
+package com.example.android.schoolapp.ui;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -15,8 +15,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.android.schoolapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -43,9 +47,10 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Profile extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private static final int GALLERY_PICK = 1;
+
 
     CircleImageView circleImageView;
     TextView mName, mMobile, date_ofBirth;
@@ -55,11 +60,13 @@ public class Profile extends AppCompatActivity {
     Calendar c;
     DatePickerDialog dpd;
 
-
     private FirebaseFirestore db;
     private StorageReference img_storageRef;
 
-    String name,mobile;
+    private ProgressBar progressBar;
+
+    private String name, mobile,image;
+    private String currentUser_id;
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -74,35 +81,24 @@ public class Profile extends AppCompatActivity {
         mName = findViewById(R.id.profileUsername2);
         mMobile = findViewById(R.id.mobile2);
         img_btn = findViewById(R.id.imageBtn);
-        FirebaseFirestore.getInstance();
+
+        progressBar = findViewById(R.id.progressBar);
+
+        //FirebaseFirestore.getInstance();
 
         btnDate = findViewById(R.id.dateBtn);
         date_ofBirth = findViewById(R.id.dateOfBirth2);
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                c = Calendar.getInstance();
-                int day = c.get(Calendar.DAY_OF_MONTH);
-                int month = c.get(Calendar.MONTH);
-                int year = c.get(Calendar.YEAR);
-                dpd = new DatePickerDialog(Profile.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
-
-                        date_ofBirth.setText(mDay + "/" + (mMonth + 1) + "/" + mYear);
-                        String date = date_ofBirth.getText().toString();
-                        Log.d("***","=>" + date);
-
-                    }
-                }, day, month, year);
-                dpd.show();
+                setDate();
             }
         });
 
-        //Toolbar for Profile Setting
+        //Toolbar for ProfileActivity Setting
         Toolbar toolbar = findViewById(R.id.bar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Profile");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("ProfileActivity");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,26 +108,38 @@ public class Profile extends AppCompatActivity {
         });
         img_storageRef = FirebaseStorage.getInstance().getReference();
 
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String currentUser_id = firebaseUser.getUid();
+        //Work remaining offline feature.
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build();
 
-        Log.d("***", "User ID" + currentUser_id);
+        db.setFirestoreSettings(settings);
+
+        //Get currentUser Id.
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert firebaseUser != null;
+        currentUser_id = firebaseUser.getUid();
 
         DocumentReference docRef = db.collection("Students").document(currentUser_id);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
+                    assert document != null;
                     if (document.exists()) {
                         name = document.getString("name");
                         mobile = document.getString("mobile");
-                        final String image = document.getString("image");
+                        image = document.getString("image");
                         mName.setText(name);
                         mMobile.setText(mobile);
 
-                        if (image.equals("default")) {
+                        assert image != null;
+                        setUpImage(image);
+                        /*if (image.equals("default")) {
                             circleImageView.setImageResource(R.drawable.ic_person);
                         } else {
+
+                            progressBar.setVisibility(View.VISIBLE);
                             Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE).into(circleImageView, new Callback() {
                                 @Override
                                 public void onSuccess() {
@@ -143,8 +151,8 @@ public class Profile extends AppCompatActivity {
                                     Picasso.get().load(image).into(circleImageView);
                                 }
                             });
-                        }
-
+                        }*/
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 }
             }
@@ -162,11 +170,12 @@ public class Profile extends AppCompatActivity {
         });
 
     }
+
     //Crop and Upload image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK) {
             assert data != null;
             Uri imageUrl = data.getData();
 
@@ -183,6 +192,7 @@ public class Profile extends AppCompatActivity {
                 Uri resultUri = result.getUri();
 
                 FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                assert firebaseUser != null;
                 final String currentUser_id = firebaseUser.getUid();
 
                 final StorageReference ref = img_storageRef.child("profile_images").child(currentUser_id + ".jpg");
@@ -192,9 +202,17 @@ public class Profile extends AppCompatActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
-                            public void onSuccess(Uri uri) {
+                            public void onSuccess(final Uri uri) {
                                 db.collection("Students").document(currentUser_id)
-                                        .update("image", uri.toString());
+                                        .update("image", uri.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            Toast.makeText(ProfileActivity.this,"Image loaded successfully",Toast.LENGTH_SHORT).show();
+                                            setUpImage(uri.toString());
+                                        }
+                                    }
+                                });
                             }
                         });
                     }
@@ -202,4 +220,50 @@ public class Profile extends AppCompatActivity {
             }
         }
     }
+
+    //Set date to Firebase.
+    private void setDate() {
+        final String[] uDate = new String[1];
+        c = Calendar.getInstance();
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int month = c.get(Calendar.MONTH);
+        int year = c.get(Calendar.YEAR);
+        dpd = new DatePickerDialog(ProfileActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
+
+                date_ofBirth.setText(mDay + "/" + (mMonth + 1) + "/" + mYear);
+                String date = date_ofBirth.getText().toString();
+                Log.d("***", "=>" + date);
+
+                uDate[0] = date;
+            }
+        }, day, month, year);
+        dpd.show();
+
+        db.collection("Students").document(currentUser_id)
+                .update("date", uDate);
+    }
+
+    private void setUpImage(final String image){
+        if (image.equals("default")) {
+            circleImageView.setImageResource(R.drawable.ic_person);
+        } else {
+
+            progressBar.setVisibility(View.VISIBLE);
+            Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE).into(circleImageView, new Callback() {
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Picasso.get().load(image).into(circleImageView);
+                }
+            });
+        }
+    }
+
+
 }

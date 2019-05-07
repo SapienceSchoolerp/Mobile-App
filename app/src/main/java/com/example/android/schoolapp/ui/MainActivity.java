@@ -1,4 +1,4 @@
-package com.example.android.schoolapp;
+package com.example.android.schoolapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.android.schoolapp.R;
+import com.example.android.schoolapp.auth.RegisterActivity;
 import com.example.android.schoolapp.adapter.PagerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         name = navigationView.getHeaderView(0).findViewById(R.id.navigation_name);
         imageNav = navigationView.getHeaderView(0).findViewById(R.id.navigation_imageView);
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert firebaseUser != null;
         String currentUser = firebaseUser.getUid();
 
         DocumentReference docRef = db.collection("Students").document(currentUser);
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
+                    assert document != null;
                     if (document.exists()) {
                         String mName = document.getString("name");
                         final String image = document.getString("image");
@@ -134,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -143,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
             //Handle the profile action
         } else if (id == R.id.profile) {
-            Intent intent = new Intent(this, Profile.class);
+            Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
         } else if (id == R.id.rate_us) {
 

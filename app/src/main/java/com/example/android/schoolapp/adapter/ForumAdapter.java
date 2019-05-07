@@ -10,24 +10,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.android.schoolapp.CommentActivity;
+import com.example.android.schoolapp.ui.CommentActivity;
 import com.example.android.schoolapp.R;
 import com.example.android.schoolapp.model.Question;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
 
-public class KnitAdapter extends RecyclerView.Adapter<KnitAdapter.ViewHolder> {
+public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> {
     private Context context;
     private List<Question> questionList;
 
-    public KnitAdapter(Context context, List<Question> questionList) {
+    public ForumAdapter(Context context, List<Question> questionList) {
         this.context = context;
         this.questionList = questionList;
     }
@@ -36,7 +30,7 @@ public class KnitAdapter extends RecyclerView.Adapter<KnitAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.knit_list, viewGroup, false);
-        return new KnitAdapter.ViewHolder(view);
+        return new ForumAdapter.ViewHolder(view);
     }
 
     @Override

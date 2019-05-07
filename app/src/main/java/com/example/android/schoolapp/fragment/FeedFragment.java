@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import com.example.android.schoolapp.Networking.ApiInterface;
 import com.example.android.schoolapp.R;
 import com.example.android.schoolapp.Networking.RetrofitClientInstance;
-import com.example.android.schoolapp.adapter.FuzeAdapter;
-import com.example.android.schoolapp.model.FuzePhoto;
+import com.example.android.schoolapp.adapter.FeedAdapter;
+import com.example.android.schoolapp.model.Feed;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FuzeFragment extends Fragment {
+public class FeedFragment extends Fragment {
 
     private RecyclerView recyclerView;
 
@@ -34,15 +34,15 @@ public class FuzeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.fuzeRecyclerView);
 
         ApiInterface apiInterface = RetrofitClientInstance.getRetrofit().create(ApiInterface.class);
-        Call<List<FuzePhoto>> call = apiInterface.getAllPhotos();
-        call.enqueue(new Callback<List<FuzePhoto>>() {
+        Call<List<Feed>> call = apiInterface.getAllPhotos();
+        call.enqueue(new Callback<List<Feed>>() {
             @Override
-            public void onResponse(Call<List<FuzePhoto>> call, Response<List<FuzePhoto>> response) {
+            public void onResponse(Call<List<Feed>> call, Response<List<Feed>> response) {
                 loadData(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<FuzePhoto>> call, Throwable t) {
+            public void onFailure(Call<List<Feed>> call, Throwable t) {
 
             }
         });
@@ -50,8 +50,8 @@ public class FuzeFragment extends Fragment {
         return view;
     }
 
-    private void loadData(List<FuzePhoto> photoList) {
-        FuzeAdapter adapter = new FuzeAdapter(photoList, getContext());
+    private void loadData(List<Feed> photoList) {
+        FeedAdapter adapter = new FeedAdapter(photoList, getContext());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
