@@ -3,7 +3,7 @@ package com.example.android.schoolapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class FuzePhoto {
+public class Feed {
 
     @SerializedName("albumId")
     private Integer albumId;
@@ -16,7 +16,7 @@ public class FuzePhoto {
     @SerializedName("thumbnailUrl")
     private String thumbnailUrl;
 
-    public FuzePhoto(Integer albumId, Integer id, String title, String url, String thumbnailUrl) {
+    public Feed(Integer albumId, Integer id, String title, String url, String thumbnailUrl) {
         this.albumId = albumId;
         this.id = id;
         this.title = title;

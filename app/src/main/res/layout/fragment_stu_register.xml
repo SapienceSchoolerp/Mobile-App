@@ -39,7 +39,7 @@
         android:layout_width="300dp"
         android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner2"
+        android:id="@+id/spinner"
         android:entries="@array/student_class"
         android:layout_gravity="center_horizontal"
         />

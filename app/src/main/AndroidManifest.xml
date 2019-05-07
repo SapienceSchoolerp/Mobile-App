@@ -13,17 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".QuestionActivity"></activity>
-        <activity android:name=".CommentActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.QuestionActivity"></activity>
+        <activity android:name=".ui.CommentActivity" />
+        <activity android:name=".ui.MainActivity" />
         <activity
-            android:name=".LoginActivity"
-            android:parentActivityName=".RegisterActivity" />
-        <activity android:name=".AccountActivity" />
-        <activity android:name=".DetailInbox" />
-        <activity android:name=".Profile" />
+            android:name=".auth.LoginActivity"
+            android:parentActivityName=".auth.RegisterActivity" />
+        <activity android:name=".ui.DetailInbox" />
+        <activity android:name=".ui.ProfileActivity" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".auth.RegisterActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.schoolapp.DetailInbox;
+import com.example.android.schoolapp.ui.DetailInbox;
 import com.example.android.schoolapp.R;
 import com.example.android.schoolapp.model.InboxData;
 

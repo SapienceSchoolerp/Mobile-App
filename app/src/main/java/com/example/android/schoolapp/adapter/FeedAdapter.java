@@ -10,18 +10,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.schoolapp.R;
-import com.example.android.schoolapp.model.FuzePhoto;
+import com.example.android.schoolapp.model.Feed;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class FuzeAdapter extends RecyclerView.Adapter<FuzeAdapter.ViewHolder> {
+public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
-    private List<FuzePhoto> dataList;
+    private List<Feed> dataList;
     private Context context;
 
-    public FuzeAdapter(List<FuzePhoto> dataList, Context context) {
+    public FeedAdapter(List<Feed> dataList, Context context) {
         this.dataList = dataList;
         this.context = context;
     }

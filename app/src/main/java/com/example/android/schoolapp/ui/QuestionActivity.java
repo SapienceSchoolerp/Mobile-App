@@ -1,4 +1,4 @@
-package com.example.android.schoolapp;
+package com.example.android.schoolapp.ui;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,11 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.android.schoolapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -74,9 +76,11 @@ public class QuestionActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String username = documentSnapshot.getString("name");
 
-                        HashMap<String, String> postMap = new HashMap<>();
+
+                        HashMap<String, Object> postMap = new HashMap<>();
                         postMap.put("question", question);
                         postMap.put("name", username);
+                        postMap.put("time",FieldValue.serverTimestamp());
 
                         db.collection("Question").add(postMap)
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -94,32 +98,5 @@ public class QuestionActivity extends AppCompatActivity {
                         });
                     }
                 });
-
-        /*
-        DocumentReference dRef = db.collection("Students").document(current);
-        dRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot document = task.getResult();
-                String name = document.getString("name");
-
-                HashMap<String,String> postMap=new HashMap<>();
-                postMap.put("question",question);
-                postMap.put("name",name);
-
-                db.collection("Questions").add(postMap)
-                       .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                           @Override
-                           public void onSuccess(DocumentReference documentReference) {
-                               Toast.makeText(QuestionActivity.this,"Successfully posting question",Toast.LENGTH_SHORT).show();
-                           }
-                       }).addOnFailureListener(new OnFailureListener() {
-                   @Override
-                   public void onFailure(@NonNull Exception e) {
-                       Toast.makeText(QuestionActivity.this,"Error in posting question",Toast.LENGTH_SHORT).show();
-                   }
-               });
-            }
-        });*/
     }
 }
