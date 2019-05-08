@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
+
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -42,7 +41,6 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 
 import java.util.Calendar;
-
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -53,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     CircleImageView circleImageView;
-    TextView mName, mMobile, date_ofBirth;
+    TextView mName, mMobile, date_ofBirth, class2;
     Button img_btn;
     ImageButton btnDate;
 
@@ -63,10 +61,10 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private StorageReference img_storageRef;
 
-    private ProgressBar progressBar;
-
-    private String name, mobile,image;
+    private String name, mobile, image, date, mClass;
     private String currentUser_id;
+
+    DocumentReference docRef;
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -81,17 +79,11 @@ public class ProfileActivity extends AppCompatActivity {
         mName = findViewById(R.id.profileUsername2);
         mMobile = findViewById(R.id.mobile2);
         img_btn = findViewById(R.id.imageBtn);
-
-        progressBar = findViewById(R.id.progressBar);
-
         btnDate = findViewById(R.id.dateBtn);
         date_ofBirth = findViewById(R.id.dateOfBirth2);
-        btnDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setDate();
-            }
-        });
+        class2 = findViewById(R.id.class2);
+
+        img_storageRef = FirebaseStorage.getInstance().getReference();
 
         //Toolbar for ProfileActivity Setting
         Toolbar toolbar = findViewById(R.id.bar);
@@ -104,56 +96,16 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
-        img_storageRef = FirebaseStorage.getInstance().getReference();
 
-        //Work remaining offline feature.
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(true)
-                .build();
 
-        db.setFirestoreSettings(settings);
+
 
         //Get currentUser Id.
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         assert firebaseUser != null;
         currentUser_id = firebaseUser.getUid();
 
-        DocumentReference docRef = db.collection("Students").document(currentUser_id);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    assert document != null;
-                    if (document.exists()) {
-                        name = document.getString("name");
-                        mobile = document.getString("mobile");
-                        image = document.getString("image");
-                        mName.setText(name);
-                        mMobile.setText(mobile);
-
-                        assert image != null;
-                        setUpImage(image);
-                        /*if (image.equals("default")) {
-                            circleImageView.setImageResource(R.drawable.ic_person);
-                        } else {
-
-                            progressBar.setVisibility(View.VISIBLE);
-                            Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE).into(circleImageView, new Callback() {
-                                @Override
-                                public void onSuccess() {
-
-                                }
-
-                                @Override
-                                public void onError(Exception e) {
-                                    Picasso.get().load(image).into(circleImageView);
-                                }
-                            });
-                        }*/
-                    }
-                }
-            }
-        });
+        setUpDetail();
 
         //Select image from gallery.
         img_btn.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +117,15 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "SELECT IMAGE"), GALLERY_PICK);
             }
         });
+
+        btnDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDate();
+            }
+        });
+
+
 
     }
 
@@ -204,8 +165,8 @@ public class ProfileActivity extends AppCompatActivity {
                                         .update("image", uri.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
-                                            Toast.makeText(ProfileActivity.this,"Image loaded successfully",Toast.LENGTH_SHORT).show();
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(ProfileActivity.this, "Image loaded successfully", Toast.LENGTH_SHORT).show();
                                             setUpImage(uri.toString());
                                         }
                                     }
@@ -220,7 +181,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     //Set date to Firebase.
     private void setDate() {
-        final String[] uDate = new String[1];
         c = Calendar.getInstance();
         int day = c.get(Calendar.DAY_OF_MONTH);
         int month = c.get(Calendar.MONTH);
@@ -231,23 +191,19 @@ public class ProfileActivity extends AppCompatActivity {
 
                 date_ofBirth.setText(mDay + "/" + (mMonth + 1) + "/" + mYear);
                 String date = date_ofBirth.getText().toString();
-                Log.d("***", "=>" + date);
+                Log.d("****","date"+date);
 
-                uDate[0] = date;
+                storeDate(date);
             }
         }, day, month, year);
         dpd.show();
-
-        db.collection("Students").document(currentUser_id)
-                .update("date", uDate);
     }
 
-    private void setUpImage(final String image){
+    private void setUpImage(final String image) {
         if (image.equals("default")) {
             circleImageView.setImageResource(R.drawable.ic_person);
         } else {
 
-            progressBar.setVisibility(View.VISIBLE);
             Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE).into(circleImageView, new Callback() {
                 @Override
                 public void onSuccess() {
@@ -262,5 +218,65 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    private void setUpDetail() {
+        docRef = db.collection("Students").document(currentUser_id);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    assert document != null;
+                    if (document.exists()) {
+                        name = document.getString("name");
+                        mobile = document.getString("mobile");
+                        image = document.getString("image");
+                        date = document.getString("dateBirth");
+                        mClass = document.getString("class");
+
+                        mName.setText(name);
+                        mMobile.setText(mobile);
+                        date_ofBirth.setText(date);
+                        class2.setText(mClass);
+
+                        assert image != null;
+                        setUpImage(image);
+                    }
+                }
+            }
+
+        });
+
+    }
+
+    private void setDateOfBirth(){
+        docRef = db.collection("Students").document(currentUser_id);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+
+                    DocumentSnapshot doc = task.getResult();
+                    assert doc != null;
+                    if(doc.exists()){
+                        date = doc.getString("dateBirth");
+                        date_ofBirth.setText(date);
+                    }
+                }
+            }
+        });
+    }
+
+    private void storeDate(String uDate){
+        db.collection("Students").document(currentUser_id)
+                .update("dateBirth", uDate).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    setDateOfBirth();
+                    Toast.makeText(ProfileActivity.this,"Successfully Upload",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
 
 }
