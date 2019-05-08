@@ -84,8 +84,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
 
-        //FirebaseFirestore.getInstance();
-
         btnDate = findViewById(R.id.dateBtn);
         date_ofBirth = findViewById(R.id.dateOfBirth2);
         btnDate.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +150,6 @@ public class ProfileActivity extends AppCompatActivity {
                                 }
                             });
                         }*/
-                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 }
             }

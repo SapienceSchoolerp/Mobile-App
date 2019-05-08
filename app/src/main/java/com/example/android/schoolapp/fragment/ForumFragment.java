@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -67,7 +68,8 @@ public class ForumFragment extends Fragment {
 
     // Read all question.
     private void readQuestion() {
-        db.collection("Question").get()
+        db.collection("Question").orderBy("time", Query.Direction.ASCENDING)
+                .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -79,7 +81,7 @@ public class ForumFragment extends Fragment {
                         adapter = new ForumAdapter(getContext(), questionList);
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
-
+                        recyclerView.smoothScrollToPosition(adapter.getItemCount());
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
