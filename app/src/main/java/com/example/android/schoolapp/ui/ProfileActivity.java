@@ -39,7 +39,6 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -48,7 +47,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileActivity extends AppCompatActivity {
 
     private static final int GALLERY_PICK = 1;
-
 
     CircleImageView circleImageView;
     TextView mName, mMobile, date_ofBirth, class2;
@@ -65,7 +63,6 @@ public class ProfileActivity extends AppCompatActivity {
     private String currentUser_id;
 
     DocumentReference docRef;
-
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -97,9 +94,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         //Get currentUser Id.
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         assert firebaseUser != null;
@@ -124,8 +118,6 @@ public class ProfileActivity extends AppCompatActivity {
                 setDate();
             }
         });
-
-
 
     }
 

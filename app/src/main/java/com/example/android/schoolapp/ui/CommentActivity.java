@@ -1,12 +1,16 @@
 package com.example.android.schoolapp.ui;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.schoolapp.R;
+import com.example.android.schoolapp.fragment.ForumFragment;
 import com.example.android.schoolapp.model.Comments;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -27,9 +32,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 
@@ -44,6 +52,9 @@ public class CommentActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     String questionId;
+
+
+    public static final String PREFS_NAME = "MyApp";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +91,13 @@ public class CommentActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         assert bundle != null;
         questionId = bundle.getString("questionId");
+        commentCount();
+
+        Bundle bundle1 = new Bundle();
+        bundle1.putString("questionId",questionId);
+
+        ForumFragment fm = new ForumFragment();
+        fm.setArguments(bundle1);
 
         //Get current Username.
         post.setOnClickListener(new View.OnClickListener() {
@@ -102,14 +120,15 @@ public class CommentActivity extends AppCompatActivity {
                 });
             }
         });
+
     }
+
 
 
     //Get all data in firestore recycler view adapter.
     @Override
     protected void onStart() {
         super.onStart();
-
 
         Query query = db.collection("Question/" + questionId + "/Comments")
                 .orderBy("time", Query.Direction.ASCENDING);
@@ -179,5 +198,24 @@ public class CommentActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    //Store Comment count
+    private void commentCount(){
+        db.collection("Question/" + questionId + "/Comments")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                        assert queryDocumentSnapshots != null;
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            int count = queryDocumentSnapshots.size();
+                            String countString = String.valueOf(count);
+                            Log.d("********","countComment"+count);
+                            db.collection("Question").document(questionId)
+                                    .update("commentCount",countString);
+                        }
+                    }
+                });
     }
 }

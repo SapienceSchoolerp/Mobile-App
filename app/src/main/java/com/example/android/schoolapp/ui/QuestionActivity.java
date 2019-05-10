@@ -81,6 +81,7 @@ public class QuestionActivity extends AppCompatActivity {
                         postMap.put("question", question);
                         postMap.put("name", username);
                         postMap.put("time",FieldValue.serverTimestamp());
+                        postMap.put("commentCount",0);
 
                         db.collection("Question").add(postMap)
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
