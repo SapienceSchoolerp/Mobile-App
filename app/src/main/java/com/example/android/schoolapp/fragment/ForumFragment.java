@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,9 @@ import com.example.android.schoolapp.model.Question;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -35,6 +38,8 @@ public class ForumFragment extends Fragment {
     private List<Question> questionList;
     RecyclerView recyclerView;
     private ForumAdapter adapter;
+
+    String questionId;
 
     FirebaseFirestore db;
 
@@ -51,8 +56,13 @@ public class ForumFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
 
+        if(getArguments()!= null){
+            questionId = getArguments().getString("questionId");
+        }
+
         questionList = new ArrayList<>();
 
+        commentCount();
         readQuestion();
 
         FloatingActionButton fab = view.findViewById(R.id.fab);
@@ -78,7 +88,7 @@ public class ForumFragment extends Fragment {
                             Question question = doc.getDocument().toObject(Question.class).withId(questionId);
                             questionList.add(question);
                         }
-                        adapter = new ForumAdapter(getContext(), questionList);
+                        adapter = new ForumAdapter(getContext(),questionList);
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                         recyclerView.smoothScrollToPosition(adapter.getItemCount());
@@ -88,5 +98,23 @@ public class ForumFragment extends Fragment {
             public void onFailure(@NonNull Exception e) {
             }
         });
+    }
+
+    private void commentCount(){
+        db.collection("Question/" + questionId + "/Comments")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                        assert queryDocumentSnapshots != null;
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            int count = queryDocumentSnapshots.size();
+                            String countString = String.valueOf(count);
+                            Log.d("********","countComment"+count);
+                            db.collection("Question").document(questionId)
+                                    .update("commentCount",countString);
+                        }
+                    }
+                });
     }
 }
